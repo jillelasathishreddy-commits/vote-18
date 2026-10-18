@@ -1,0 +1,23 @@
+{
+  "name": "vote-18-smart-voter-system",
+  "version": "1.0.0",
+  "description": "Smart Voter Registration System Using Aadhaar-Based Verification (Vote 18)",
+  "scripts": {
+    "server": "npm --prefix server start",
+    "client": "npm --prefix client dev",
+    "dev": "npm --prefix server start & npm --prefix client dev",
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "build:client": "npm --prefix client run build"
+  },
+  "keywords": [
+    "voter-id",
+    "aadhaar-verification",
+    "civic-tech",
+    "election-commission",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC"
+}
