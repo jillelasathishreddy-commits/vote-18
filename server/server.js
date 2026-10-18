@@ -100,7 +100,7 @@ const connectDBAndSeed = async () => {
       const existingCitizen = await User.findOne({ email: citizenEmail });
       if (!existingCitizen) {
         const citizenUser = new User({
-          name: 'Sathish Reddy',
+          name: 'Citizen User',
           email: citizenEmail,
           password: 'user123',
           role: 'user',

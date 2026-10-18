@@ -40,13 +40,13 @@ export default function DetailsStep3({ verificationData, onSubmitted, onBack }) 
   const { user, token } = useAuth();
 
   const [formData, setFormData] = useState({
-    fullName: user?.name || 'Sathish Reddy',
-    relativeName: 'Venkata Reddy',
+    fullName: user?.name || '',
+    relativeName: '',
     relationType: 'Father',
     gender: 'Male',
     dob: '2004-03-20',
     mobile: user?.mobile || '9848012345',
-    email: user?.email || 'sathish.reddy@example.com',
+    email: user?.email || 'citizen@example.com',
     houseNo: 'Plot No. 84, H.No 3-5-112',
     street: 'Madhapur Main Road',
     villageOrTown: 'Hyderabad',
@@ -101,13 +101,13 @@ export default function DetailsStep3({ verificationData, onSubmitted, onBack }) 
 
   const handleAutofillComplete = () => {
     setFormData({
-      fullName: 'Sathish Reddy',
-      relativeName: 'Venkata Reddy',
+      fullName: 'Citizen Applicant',
+      relativeName: 'Guardian Name',
       relationType: 'Father',
       gender: 'Male',
       dob: '2004-03-20',
       mobile: '9848012345',
-      email: 'sathish.reddy@example.com',
+      email: 'citizen@example.com',
       houseNo: 'Plot No. 84, H.No 3-5-112',
       street: 'Madhapur Main Road',
       villageOrTown: 'Hyderabad',
@@ -217,7 +217,7 @@ export default function DetailsStep3({ verificationData, onSubmitted, onBack }) 
                 required
                 value={formData.fullName}
                 onChange={handleChange}
-                placeholder="e.g. Sathish Reddy"
+                placeholder="Enter Full Name"
                 className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 text-sm focus:outline-none focus:border-stone-800 focus:ring-1 focus:ring-stone-800"
               />
             </div>

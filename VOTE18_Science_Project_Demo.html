@@ -649,17 +649,15 @@
         </div>
 
         <form id="authForm" onsubmit="handleAuthSubmit(event)">
-          <!-- Name field for registration -->
+          <!-- Name field for registration (Optional) -->
           <div class="form-group" id="regNameGroup" style="display: none;">
-            <label class="form-label" for="loginName">Applicant Full Name</label>
+            <label class="form-label" for="loginName">Applicant Full Name (Optional / ఐచ్ఛికం)</label>
             <input
               type="text"
               id="loginName"
               class="form-input"
-              placeholder="e.g. Sathish Reddy Jillela"
-              oninput="validateName(this)"
+              placeholder="Enter Full Name (Optional)"
             />
-            <div class="validation-feedback" id="nameFeedback"></div>
           </div>
 
           <!-- Mobile / Email -->
@@ -670,7 +668,6 @@
               id="loginIdentifier"
               class="form-input"
               placeholder="10-Digit Mobile or Email ID"
-              value="9848012345"
               oninput="validateIdentifier(this)"
               required
             />
@@ -685,7 +682,6 @@
               id="loginPassword"
               class="form-input"
               placeholder="••••••••"
-              value="voter123"
               oninput="validatePassword(this)"
               required
             />
@@ -699,7 +695,7 @@
 
         <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #f1f5f9;">
           <button type="button" class="btn-secondary" onclick="quickFillCitizen()">
-            ⚡ 1-Click Fast Login (Citizen Demo)
+            ⚡ 1-Click Fast Login
           </button>
         </div>
       </div>
@@ -719,11 +715,11 @@
         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:14px; text-align:left; font-size:12.5px; margin-bottom:18px;">
           <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2e8f0;">
             <span style="color:#64748b;">Applicant:</span>
-            <strong id="welcomeCitizenName" style="color:#0f2942;">Sathish Reddy</strong>
+            <strong id="welcomeCitizenName" style="color:#0f2942;">XXXXXX XXXXXX</strong>
           </div>
           <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2e8f0;">
             <span style="color:#64748b;">Assembly Constituency:</span>
-            <strong style="color:#003366;">227 - Kandukur</strong>
+            <strong style="color:#003366;">XXXXXX</strong>
           </div>
           <div style="display:flex; justify-content:space-between; padding:4px 0;">
             <span style="color:#64748b;">State:</span>
@@ -827,31 +823,27 @@
         </div>
 
         <form onsubmit="handleDobSubmit(event)">
-          <!-- Full Name -->
+          <!-- Full Name (Optional) -->
           <div class="form-group">
-            <label class="form-label" for="applicantFullName">Full Name (As in Official Records)</label>
+            <label class="form-label" for="applicantFullName">Full Name (Optional / ఐచ్ఛికం)</label>
             <input
               type="text"
               id="applicantFullName"
               class="form-input"
-              placeholder="e.g. Sathish Reddy Jillela"
-              value="Sathish Reddy Jillela"
-              oninput="validateName(this)"
-              required
+              placeholder="Enter Full Name (Optional)"
+              value=""
             />
-            <div class="validation-feedback" id="fullNameFeedback"></div>
           </div>
 
-          <!-- Relative Name -->
+          <!-- Relative Name (Optional) -->
           <div class="form-group">
-            <label class="form-label" for="relativeFullName">Father / Mother / Husband Name</label>
+            <label class="form-label" for="relativeFullName">Father / Mother / Husband Name (Optional / ఐచ్ఛికం)</label>
             <input
               type="text"
               id="relativeFullName"
               class="form-input"
-              placeholder="e.g. Venkata Reddy Jillela"
-              value="Venkata Reddy Jillela"
-              required
+              placeholder="Enter Relative Name (Optional)"
+              value=""
             />
           </div>
 
@@ -867,7 +859,7 @@
 
           <!-- Date of Birth -->
           <div class="form-group">
-            <label class="form-label" for="dobPicker">Date of Birth (పుట్టిన తేదీ)</label>
+            <label class="form-label" for="dobPicker">Date of Birth (పుట్టిన తేదీ) *</label>
             <input
               type="date"
               id="dobPicker"
@@ -883,13 +875,13 @@
             </div>
           </div>
 
-          <!-- Assembly Constituency (Fixed Kandukur, AP) -->
+          <!-- Assembly Constituency (Masked XXXXXX) -->
           <div class="form-group">
             <label class="form-label">Assembly Constituency & State</label>
             <input
               type="text"
               class="form-input"
-              value="227 - KANDUKUR, ANDHRA PRADESH"
+              value="XXXXXX, ANDHRA PRADESH"
               disabled
               style="background:#f1f5f9; color:#475569; font-weight:700;"
             />
@@ -1032,11 +1024,11 @@
           <div class="elector-details-col">
             <div class="detail-line">
               <span class="detail-label">Elector's Name:</span>
-              <span class="detail-value highlight" id="cardNameVal">Sathish Reddy Jillela</span>
+              <span class="detail-value highlight" id="cardNameVal">XXXXXX XXXXXX</span>
             </div>
             <div class="detail-line">
               <span class="detail-label">Father's Name:</span>
-              <span class="detail-value" id="cardFatherVal">Venkata Reddy Jillela</span>
+              <span class="detail-value" id="cardFatherVal">XXXXXX XXXXXX</span>
             </div>
             <div class="detail-line">
               <span class="detail-label">Gender & Date of Birth:</span>
@@ -1044,15 +1036,15 @@
             </div>
             <div class="detail-line">
               <span class="detail-label">Assembly Constituency:</span>
-              <span class="detail-value highlight">227 - KANDUKUR</span>
+              <span class="detail-value highlight">XXXXXX</span>
             </div>
             <div class="detail-line">
               <span class="detail-label">District & State:</span>
-              <span class="detail-value">NELLORE, ANDHRA PRADESH</span>
+              <span class="detail-value">XXXXXX, ANDHRA PRADESH</span>
             </div>
             <div class="detail-line">
               <span class="detail-label">Polling Station:</span>
-              <span class="detail-value" style="font-size:10.5px;">Govt. Boys High School, Kandukur Room No. 2</span>
+              <span class="detail-value" style="font-size:10.5px;">Polling Station No. XXXXXX</span>
             </div>
           </div>
         </div>
@@ -1064,7 +1056,7 @@
             <span class="epic-number-badge" id="cardEpicVal">AND7849201</span>
           </div>
           <div>
-            <span>Part No: 142 • AC: 227</span>
+            <span>Part No: XXX • AC: XXXXXX</span>
           </div>
         </div>
       </div>
@@ -1090,8 +1082,8 @@
   <script>
     // State Store
     let authMode = 'login'; // 'login' | 'register'
-    let currentUserName = 'Sathish Reddy Jillela';
-    let currentRelativeName = 'Venkata Reddy Jillela';
+    let currentUserName = 'XXXXXX XXXXXX';
+    let currentRelativeName = 'XXXXXX XXXXXX';
     let currentGender = 'MALE';
     let currentDob = '2004-05-14';
     let currentAge = 21;
@@ -1289,9 +1281,9 @@
 
       if (!isIdValid || !isPwdValid || !isNameValid) return;
 
-      // Update header with logged in user
+      // Update header with logged in user (Clean Citizen tag, no personal name)
       document.getElementById('loggedInUserTag').style.display = 'block';
-      document.getElementById('userTagText').innerText = currentUserName.split(' ')[0];
+      document.getElementById('userTagText').innerText = 'Citizen';
       document.getElementById('welcomeCitizenName').innerText = currentUserName;
 
       showScreen('screenWelcome');
@@ -1392,14 +1384,17 @@
       const relativeInput = document.getElementById('relativeFullName');
       const dobInput = document.getElementById('dobPicker');
 
-      const isNameValid = validateName(nameInput);
-      if (!isNameValid || !relativeInput.value.trim() || !dobInput.value) {
-        alert('Please fill out all mandatory demographic fields.');
+      if (!dobInput.value) {
+        alert('Please select your Date of Birth.');
         return;
       }
 
-      currentUserName = nameInput.value.trim();
-      currentRelativeName = relativeInput.value.trim();
+      // Names are Optional as requested
+      const inputName = nameInput ? nameInput.value.trim() : '';
+      const inputRel = relativeInput ? relativeInput.value.trim() : '';
+
+      currentUserName = inputName || 'XXXXXX XXXXXX';
+      currentRelativeName = inputRel || 'XXXXXX XXXXXX';
       currentGender = document.getElementById('genderSelect').value;
       currentDob = dobInput.value;
 
@@ -1517,7 +1512,7 @@
           document.getElementById('cardGenderDobVal').innerText = `${currentGender} · DOB: ${currentDob} (${currentAge} Yrs)`;
           document.getElementById('cardVoterPhoto').src = userPhotoUrl;
 
-          // Official Kandukur EPIC prefix (e.g. AND7841920)
+          // Official EPIC prefix (e.g. AND7841920)
           const randomEpic = 'AND' + Math.floor(1000000 + Math.random() * 9000000);
           document.getElementById('cardEpicVal').innerText = randomEpic;
 
@@ -1587,14 +1582,14 @@
       ctx.fillText("ASSEMBLY CONSTITUENCY:", x, 206);
       ctx.fillStyle = '#003366';
       ctx.font = 'bold 12.5px sans-serif';
-      ctx.fillText("227 - KANDUKUR, ANDHRA PRADESH", x, 222);
+      ctx.fillText("XXXXXX, ANDHRA PRADESH", x, 222);
 
       ctx.fillStyle = '#64748b';
       ctx.font = 'bold 9px sans-serif';
       ctx.fillText("POLLING STATION:", x, 246);
       ctx.fillStyle = '#0f172a';
       ctx.font = 'bold 11px sans-serif';
-      ctx.fillText("Govt. Boys High School, Kandukur Room No. 2", x, 260);
+      ctx.fillText("Polling Station No. XXXXXX", x, 260);
 
       // Photo
       const photoImg = document.getElementById('cardVoterPhoto');
@@ -1631,7 +1626,7 @@
 
       ctx.fillStyle = '#64748b';
       ctx.font = '10.5px sans-serif';
-      ctx.fillText('Part No: 142 • AC: 227 (Kandukur)', 320, 316);
+      ctx.fillText('Part No: XXX • AC: XXXXXX', 320, 316);
 
       const link = document.createElement('a');
       link.download = `Voter_ID_Card_${epic}.png`;

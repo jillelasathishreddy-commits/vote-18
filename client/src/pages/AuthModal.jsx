@@ -36,7 +36,7 @@ export default function AuthModal({ onLoginSuccess }) {
   const handleQuickFillCitizen = () => {
     setSelectedRole('user');
     setFormData({
-      name: 'Sathish Reddy',
+      name: 'Citizen Applicant',
       email: 'user@vote18.in',
       password: 'user123',
       mobile: '9848012345',
@@ -204,7 +204,7 @@ export default function AuthModal({ onLoginSuccess }) {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="e.g. Sathish Reddy"
+                  placeholder="Full Name (Optional)"
                   className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-stone-300 focus:outline-none focus:border-stone-800"
                 />
               </div>
