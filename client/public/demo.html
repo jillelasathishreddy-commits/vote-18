@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🇮🇳 VOTE 18 • SCIENCE PROJECT DEMO</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+    }
+
+    /* Fixed Top App Header matching screenshot */
+    .app-header {
+      width: 100%;
+      padding: 16px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .app-header-title {
+      color: #004bb5;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Main Container */
+    .screen-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 24px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .step-box {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    .step-box.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card Box */
+    .content-card {
+      width: 100%;
+      background: #f7fbf8;
+      border: 1.5px solid #7ba185;
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      margin-bottom: 22px;
+    }
+
+    .content-card h2 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #002d62;
+      margin-bottom: 8px;
+    }
+
+    .content-card p {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    /* Primary Action Button matching blue START AGAIN */
+    .btn-action {
+      width: 100%;
+      background: #0b63e5;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.25);
+      transition: all 0.15s ease-in-out;
+    }
+
+    .btn-action:hover {
+      background: #0952c2;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    /* 5-Second Processing Screen */
+    .processing-container {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .timer-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #0b63e5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.2);
+    }
+
+    .timer-num {
+      font-size: 30px;
+      font-weight: 900;
+      color: #0b63e5;
+      line-height: 1;
+    }
+
+    .timer-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 16px 0 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #0b63e5;
+      border-radius: 999px;
+      transition: width 0.1s linear;
+    }
+
+    .processing-msg {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      min-height: 20px;
+    }
+
+    /* Form Fields */
+    .input-wrapper {
+      width: 100%;
+      text-align: left;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    .input-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .app-input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+      color: #0f172a;
+      background: #ffffff;
+      outline: none;
+      font-weight: 600;
+    }
+
+    .app-input:focus {
+      border-color: #0b63e5;
+      box-shadow: 0 0 0 3px rgba(11, 99, 229, 0.15);
+    }
+
+    .pill-btn {
+      display: inline-block;
+      margin-top: 8px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    /* Camera / Photo area */
+    .camera-box {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .preview-photo {
+      width: 110px;
+      height: 130px;
+      object-fit: cover;
+      border: 1px solid #64748b;
+      border-radius: 6px;
+      margin: 0 auto 10px;
+      display: block;
+      background: #f1f5f9;
+    }
+
+    #videoStream {
+      width: 100%;
+      max-width: 220px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #0b63e5;
+      display: none;
+      margin: 0 auto 10px;
+      transform: scaleX(-1);
+    }
+
+    /* ===================================================
+       VOTER ID CARD: MATCHING THE EXACT SCREENSHOT
+       =================================================== */
+    .voter-card-outer {
+      width: 100%;
+      background: #f7fbf8;
+      border: 1.5px solid #7ba185;
+      border-radius: 14px;
+      padding: 16px 14px 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      margin-bottom: 24px;
+    }
+
+    .card-top-title {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #002d62;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .card-top-sub {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: #002d62;
+      letter-spacing: 0.2px;
+      margin-bottom: 14px;
+    }
+
+    .card-body-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .card-photo-wrap {
+      width: 105px;
+      flex-shrink: 0;
+    }
+
+    .card-photo-img {
+      width: 105px;
+      height: 125px;
+      object-fit: cover;
+      border: 1px solid #475569;
+      border-radius: 2px;
+      display: block;
+      background: #cbd5e1;
+    }
+
+    .card-info-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      line-height: 1.35;
+      color: #0f172a;
+    }
+
+    .info-line {
+      font-weight: 500;
+      color: #0f172a;
+    }
+
+    .info-line b {
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .card-bottom-disclaimer {
+      text-align: center;
+      font-size: 9.5px;
+      color: #475569;
+      line-height: 1.35;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .card-bottom-disclaimer span {
+      display: block;
+      font-weight: 700;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Fixed Bar -->
+  <header class="app-header">
+    <div class="app-header-title">
+      <span>🇮🇳</span>
+      <span>VOTE 18 • SCIENCE PROJECT DEMO</span>
+    </div>
+  </header>
+
+  <main class="screen-container">
+
+    <!-- STEP 1: WELCOME SCREEN -->
+    <div id="stepWelcome" class="step-box active">
+      <div class="content-card">
+        <div style="font-size: 42px; margin-bottom: 8px;">🇮🇳</div>
+        <h2>Welcome to VOTE 18</h2>
+        <p>Smart Voter Registration System Using Aadhaar-Based Verification</p>
+        <div style="margin-top: 14px; padding: 10px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 12px; color: #334155;">
+          📍 <strong>Constituency:</strong> KANDUKUR (227), ANDHRA PRADESH<br>
+          🔬 <strong>Type:</strong> Science Exhibition Prototype Demo
+        </div>
+      </div>
+      <button class="btn-action" onclick="onEnterClick()">ENTER</button>
+    </div>
+
+    <!-- STEP 2: 5 SECONDS PROCESSING (Handshake) -->
+    <div id="stepProc1" class="step-box">
+      <div class="processing-container">
+        <div class="timer-circle">
+          <span class="timer-num" id="p1Sec">5</span>
+          <span class="timer-lbl">SECONDS</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="p1Bar"></div>
+        </div>
+        <p class="processing-msg" id="p1Msg">Connecting to citizen verification gateway...</p>
+      </div>
+    </div>
+
+    <!-- STEP 3: SAMPLE AADHAAR NUMBER -->
+    <div id="stepAadhaar" class="step-box">
+      <div class="content-card">
+        <h2>Sample Aadhaar Number</h2>
+        <p>Enter 12-digit simulated Aadhaar number for demographic verification.</p>
+        
+        <div class="input-wrapper">
+          <label class="input-label">Aadhaar Number (12 Digits)</label>
+          <input
+            type="text"
+            id="aadhaarInput"
+            class="app-input"
+            style="letter-spacing: 2px; text-align: center; font-family: monospace;"
+            placeholder="XXXX XXXX XXXX"
+            value="9876 5432 1098"
+            maxlength="14"
+            oninput="formatAadhaar(this)"
+          />
+          <div style="text-align: center;">
+            <span class="pill-btn" onclick="usePresetAadhaar('9876 5432 1098')">
+              ✨ Sample Aadhaar: 9876 5432 1098
+            </span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-action" onclick="onAadhaarSubmit()">VERIFY AADHAAR</button>
+    </div>
+
+    <!-- STEP 4: 5 SECONDS PROCESSING (Aadhaar Check) -->
+    <div id="stepProc2" class="step-box">
+      <div class="processing-container">
+        <div class="timer-circle">
+          <span class="timer-num" id="p2Sec">5</span>
+          <span class="timer-lbl">SECONDS</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="p2Bar"></div>
+        </div>
+        <p class="processing-msg" id="p2Msg">Verifying simulated Aadhaar token...</p>
+      </div>
+    </div>
+
+    <!-- STEP 5: DATE OF BIRTH -->
+    <div id="stepDob" class="step-box">
+      <div class="content-card">
+        <h2>Date of Birth</h2>
+        <p>Select date of birth to check constitutional 18+ voter eligibility.</p>
+        
+        <div class="input-wrapper">
+          <label class="input-label">Date of Birth (YYYY-MM-DD)</label>
+          <input
+            type="date"
+            id="dobInput"
+            class="app-input"
+            value="1979-10-18"
+            style="text-align: center;"
+            onchange="updateAgePreview()"
+          />
+          <div style="display:flex; justify-content:center; gap:8px; margin-top:8px;">
+            <span class="pill-btn" onclick="setPresetDob('1979-10-18')">Sample Adult (1979-10-18)</span>
+            <span class="pill-btn" style="background:#fee2e2; border-color:#fca5a5; color:#dc2626;" onclick="setPresetDob('2011-04-12')">Under 18 (2011-04-12)</span>
+          </div>
+        </div>
+
+        <div id="agePreviewBox" style="margin-top: 14px; font-weight: 700; color: #002d62; font-size: 13px;">
+          Calculated Age: <span id="agePreviewNum" style="color:#0b63e5;">47</span> Years
+        </div>
+      </div>
+      <button class="btn-action" onclick="onDobSubmit()">CHECK ELIGIBILITY</button>
+    </div>
+
+    <!-- STEP 6: 5 SECONDS PROCESSING (Age Calculation) -->
+    <div id="stepProc3" class="step-box">
+      <div class="processing-container">
+        <div class="timer-circle">
+          <span class="timer-num" id="p3Sec">5</span>
+          <span class="timer-lbl">SECONDS</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="p3Bar"></div>
+        </div>
+        <p class="processing-msg" id="p3Msg">Evaluating 18+ eligibility threshold...</p>
+      </div>
+    </div>
+
+    <!-- STEP 7A: NOT ELIGIBLE (Below 18) -->
+    <div id="stepNotEligible" class="step-box">
+      <div class="content-card" style="background: #fff5f5; border-color: #fca5a5;">
+        <div style="font-size: 40px; margin-bottom: 8px;">❌</div>
+        <h2 style="color: #dc2626;">Below 18 → Not Eligible</h2>
+        <p style="color: #991b1b; margin-top: 6px;">
+          As per the Constitution of India (Article 326), an individual must be <strong>18 years of age or older</strong> on the qualifying date to register as a voter.
+        </p>
+        <div style="margin-top: 14px; padding: 12px; background: #ffffff; border: 1px solid #fecaca; border-radius: 8px; font-size: 13px;">
+          <strong>Your Calculated Age:</strong> <span id="notEligibleAgeVal" style="color:#dc2626; font-weight:800;">15</span> Years<br>
+          <span style="color:#64748b; font-size:12px;">Please apply once you reach 18 years of age.</span>
+        </div>
+      </div>
+      <button class="btn-action" onclick="restartDemo()">START AGAIN</button>
+    </div>
+
+    <!-- STEP 7B: 18+ ELIGIBLE & CAMERA / PHOTO UPLOAD -->
+    <div id="stepEligible" class="step-box">
+      <div class="content-card" style="background: #f0fdf4; border-color: #86efac;">
+        <div style="font-size: 38px; margin-bottom: 6px;">✅</div>
+        <h2 style="color: #166534;">18+ → Eligible for Vote!</h2>
+        <p style="color: #15803d;">
+          You meet the age criteria. Provide name and photo for your Sample Voter ID Card.
+        </p>
+
+        <!-- Name Input -->
+        <div class="input-wrapper" style="margin-top: 12px;">
+          <label class="input-label">Elector Name</label>
+          <input type="text" id="voterNameInput" class="app-input" value="DEMO USER" />
+        </div>
+
+        <!-- Photo Section -->
+        <div class="camera-box">
+          <label class="input-label" style="text-align:center; margin-bottom: 8px;">Applicant Photograph</label>
+          
+          <img id="applicantPhotoPreview" class="preview-photo" src="" alt="Photo" />
+          <video id="videoStream" autoplay playsinline></video>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <button type="button" class="btn-secondary" id="camBtn" onclick="toggleWebcam()">
+              📷 Take Live Photo (Camera)
+            </button>
+            <label class="btn-secondary" style="cursor:pointer; text-align:center;">
+              📁 Upload Photo File
+              <input type="file" id="photoFileInput" accept="image/*" style="display:none;" onchange="handleFile(this)" />
+            </label>
+            <button type="button" class="btn-secondary" onclick="useSamplePhoto()">
+              ✨ Use Demo Photo (from Sample Card)
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-action" onclick="onPhotoSubmit()">GENERATE VOTER ID CARD</button>
+    </div>
+
+    <!-- STEP 8: 5 SECONDS PROCESSING (Card Generation) -->
+    <div id="stepProc4" class="step-box">
+      <div class="processing-container">
+        <div class="timer-circle">
+          <span class="timer-num" id="p4Sec">5</span>
+          <span class="timer-lbl">SECONDS</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="p4Bar"></div>
+        </div>
+        <p class="processing-msg" id="p4Msg">Generating Sample Elector Photo Identity Card...</p>
+      </div>
+    </div>
+
+    <!-- STEP 9: SAMPLE VOTER ID CARD (EXACT REPLICA OF USER'S SCREENSHOT) -->
+    <div id="stepCard" class="step-box">
+
+      <!-- THE EXACT CARD -->
+      <div class="voter-card-outer" id="voterCardToPrint">
+        <!-- Top Card Title -->
+        <div class="card-top-title">
+          <span>🇮🇳</span>
+          <span>SAMPLE ELECTOR PHOTO IDENTITY CARD</span>
+        </div>
+        <div class="card-top-sub">
+          VOTE 18 SCIENCE PROJECT — NOT A GOVERNMENT DOCUMENT
+        </div>
+
+        <!-- Body row: Photo on left, Details on right -->
+        <div class="card-body-row">
+          <div class="card-photo-wrap">
+            <img id="cardFinalPhoto" class="card-photo-img" src="" alt="Voter Photo" />
+          </div>
+
+          <div class="card-info-wrap">
+            <div class="info-line"><b>Name:</b> <span id="cardName">DEMO USER</span></div>
+            <div class="info-line"><b>DOB:</b> <span id="cardDob">1979-10-18</span></div>
+            <div class="info-line"><b>Age:</b> <span id="cardAge">47</span></div>
+            <div class="info-line"><b>Demo ID:</b> <span id="cardDemoId">V18-DEMO-001</span></div>
+            <div class="info-line"><b>Constituency:</b> KANDUKUR</div>
+            <div class="info-line"><b>State:</b> ANDHRA PRADESH</div>
+          </div>
+        </div>
+
+        <!-- Bottom Card Disclaimer -->
+        <div class="card-bottom-disclaimer">
+          <span>SAMPLE / FOR SCIENCE EXHIBITION ONLY</span>
+          Not issued or verified by the Government of India.
+        </div>
+      </div>
+
+      <!-- Blue START AGAIN Button matching screenshot -->
+      <button class="btn-action" onclick="restartDemo()">START AGAIN</button>
+
+      <!-- Optional Download Button for Fair Exhibitors -->
+      <button class="btn-secondary" style="margin-top: 12px;" onclick="downloadCardImage()">
+        📥 Download Card Image (PNG)
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    // State
+    let aadhaarNum = '9876 5432 1098';
+    let dobVal = '1979-10-18';
+    let calculatedAge = 47;
+    let electorName = 'DEMO USER';
+    let photoDataUrl = '';
+    let streamRef = null;
+
+    // High quality default photo matching the gentleman in the sample card
+    const defaultSamplePhoto = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='110' height='130' viewBox='0 0 110 130'><rect width='110' height='130' fill='%23a7d4be'/><circle cx='55' cy='52' r='28' fill='%23c48b68'/><rect x='34' y='46' width='18' height='12' rx='2' fill='none' stroke='%23000' stroke-width='2'/><rect x='58' y='46' width='18' height='12' rx='2' fill='none' stroke='%23000' stroke-width='2'/><line x1='52' y1='52' x2='58' y2='52' stroke='%23000' stroke-width='2'/><path d='M42 66 Q55 74 68 66' stroke='%23000' stroke-width='2' fill='none'/><path d='M44 64 Q55 68 66 64' fill='%23444'/><path d='M20 130 C 20 95, 90 95, 90 130 Z' fill='%231e293b'/></svg>";
+    photoDataUrl = defaultSamplePhoto;
+    document.getElementById('applicantPhotoPreview').src = photoDataUrl;
+
+    // Navigation Helper
+    function goToStep(stepId) {
+      const allSteps = [
+        'stepWelcome', 'stepProc1', 'stepAadhaar', 'stepProc2',
+        'stepDob', 'stepProc3', 'stepNotEligible', 'stepEligible',
+        'stepProc4', 'stepCard'
+      ];
+      allSteps.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      const target = document.getElementById(stepId);
+      if (target) target.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // 5-Second Processing Runner
+    function run5sProcessing(procStepId, secId, barId, msgId, textMsg, nextStepCallback) {
+      goToStep(procStepId);
+      let count = 5;
+      const secEl = document.getElementById(secId);
+      const barEl = document.getElementById(barId);
+      const msgEl = document.getElementById(msgId);
+
+      secEl.innerText = count;
+      barEl.style.width = '0%';
+      msgEl.innerText = textMsg;
+
+      let elapsed = 0;
+      const timer = setInterval(() => {
+        elapsed += 100;
+        const pct = (elapsed / 5000) * 100;
+        barEl.style.width = pct + '%';
+
+        const rem = Math.ceil((5000 - elapsed) / 1000);
+        if (rem !== count && rem >= 0) {
+          count = rem;
+          secEl.innerText = count > 0 ? count : 1;
+        }
+
+        if (elapsed >= 5000) {
+          clearInterval(timer);
+          barEl.style.width = '100%';
+          secEl.innerText = '0';
+          setTimeout(nextStepCallback, 200);
+        }
+      }, 100);
+    }
+
+    // Step 1 -> Enter
+    function onEnterClick() {
+      run5sProcessing('stepProc1', 'p1Sec', 'p1Bar', 'p1Msg', 'Connecting to citizen verification gateway...', () => {
+        goToStep('stepAadhaar');
+      });
+    }
+
+    // Step 3 -> Aadhaar format
+    function formatAadhaar(input) {
+      let val = input.value.replace(/\D/g, '').substring(0, 12);
+      let res = '';
+      for (let i = 0; i < val.length; i++) {
+        if (i > 0 && i % 4 === 0) res += ' ';
+        res += val[i];
+      }
+      input.value = res;
+    }
+
+    function usePresetAadhaar(val) {
+      document.getElementById('aadhaarInput').value = val;
+    }
+
+    // Step 3 -> Aadhaar Submit
+    function onAadhaarSubmit() {
+      const val = document.getElementById('aadhaarInput').value.trim();
+      if (val.replace(/\s/g, '').length < 12) {
+        alert('Please enter a 12-digit sample Aadhaar number.');
+        return;
+      }
+      aadhaarNum = val;
+      run5sProcessing('stepProc2', 'p2Sec', 'p2Bar', 'p2Msg', 'Verifying simulated Aadhaar token...', () => {
+        goToStep('stepDob');
+      });
+    }
+
+    // Step 5 -> DOB
+    function setPresetDob(val) {
+      document.getElementById('dobInput').value = val;
+      updateAgePreview();
+    }
+
+    function updateAgePreview() {
+      const val = document.getElementById('dobInput').value;
+      if (!val) return;
+      const bDate = new Date(val);
+      const now = new Date();
+      let age = now.getFullYear() - bDate.getFullYear();
+      const mDiff = now.getMonth() - bDate.getMonth();
+      if (mDiff < 0 || (mDiff === 0 && now.getDate() < bDate.getDate())) {
+        age--;
+      }
+      document.getElementById('agePreviewNum').innerText = age;
+    }
+
+    // Step 5 -> DOB Submit
+    function onDobSubmit() {
+      const val = document.getElementById('dobInput').value;
+      if (!val) {
+        alert('Please select date of birth.');
+        return;
+      }
+      dobVal = val;
+      const bDate = new Date(dobVal);
+      const now = new Date();
+      let age = now.getFullYear() - bDate.getFullYear();
+      const mDiff = now.getMonth() - bDate.getMonth();
+      if (mDiff < 0 || (mDiff === 0 && now.getDate() < bDate.getDate())) {
+        age--;
+      }
+      calculatedAge = age;
+
+      run5sProcessing('stepProc3', 'p3Sec', 'p3Bar', 'p3Msg', 'Evaluating 18+ eligibility threshold...', () => {
+        if (calculatedAge >= 18) {
+          goToStep('stepEligible');
+        } else {
+          document.getElementById('notEligibleAgeVal').innerText = calculatedAge;
+          goToStep('stepNotEligible');
+        }
+      });
+    }
+
+    // Step 7 -> Photo Handling
+    function useSamplePhoto() {
+      photoDataUrl = defaultSamplePhoto;
+      document.getElementById('applicantPhotoPreview').src = photoDataUrl;
+      stopWebcam();
+    }
+
+    function handleFile(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          photoDataUrl = e.target.result;
+          document.getElementById('applicantPhotoPreview').src = photoDataUrl;
+          stopWebcam();
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    async function toggleWebcam() {
+      const video = document.getElementById('videoStream');
+      const camBtn = document.getElementById('camBtn');
+
+      if (streamRef) {
+        // Capture frame
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth || 220;
+        canvas.height = video.videoHeight || 260;
+        const ctx = canvas.getContext('2d');
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        photoDataUrl = canvas.toDataURL('image/png');
+        document.getElementById('applicantPhotoPreview').src = photoDataUrl;
+        stopWebcam();
+      } else {
+        try {
+          streamRef = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          video.srcObject = streamRef;
+          video.style.display = 'block';
+          camBtn.innerText = '📸 Click to Capture Photo';
+        } catch (err) {
+          alert('Camera not accessible. Using default sample photo.');
+          useSamplePhoto();
+        }
+      }
+    }
+
+    function stopWebcam() {
+      if (streamRef) {
+        streamRef.getTracks().forEach(t => t.stop());
+        streamRef = null;
+      }
+      document.getElementById('videoStream').style.display = 'none';
+      document.getElementById('camBtn').innerText = '📷 Take Live Photo (Camera)';
+    }
+
+    // Step 7 -> Photo Submit & Generate Card
+    function onPhotoSubmit() {
+      const nameVal = document.getElementById('voterNameInput').value.trim();
+      electorName = nameVal || 'DEMO USER';
+      if (!photoDataUrl) {
+        photoDataUrl = defaultSamplePhoto;
+      }
+
+      run5sProcessing('stepProc4', 'p4Sec', 'p4Bar', 'p4Msg', 'Generating Sample Elector Photo Identity Card...', () => {
+        // Populate card matching screenshot
+        document.getElementById('cardName').innerText = electorName;
+        document.getElementById('cardDob').innerText = dobVal;
+        document.getElementById('cardAge').innerText = calculatedAge;
+        document.getElementById('cardDemoId').innerText = 'V18-DEMO-' + String(Math.floor(1 + Math.random() * 999)).padStart(3, '0');
+        document.getElementById('cardFinalPhoto').src = photoDataUrl;
+
+        goToStep('stepCard');
+      });
+    }
+
+    // Download Card as PNG Image
+    function downloadCardImage() {
+      const card = document.getElementById('voterCardToPrint');
+      const canvas = document.createElement('canvas');
+      canvas.width = 440;
+      canvas.height = 280;
+      const ctx = canvas.getContext('2d');
+
+      // Card Background
+      ctx.fillStyle = '#f7fbf8';
+      ctx.fillRect(0, 0, 440, 280);
+
+      // Border
+      ctx.strokeStyle = '#7ba185';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(2, 2, 436, 276);
+
+      // Title
+      ctx.fillStyle = '#002d62';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('🇮🇳 SAMPLE ELECTOR PHOTO IDENTITY CARD', 220, 28);
+
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText('VOTE 18 SCIENCE PROJECT — NOT A GOVERNMENT DOCUMENT', 220, 44);
+
+      // Details
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '13px sans-serif';
+
+      const x = 145;
+      ctx.fillText('Name: ' + document.getElementById('cardName').innerText, x, 82);
+      ctx.fillText('DOB: ' + document.getElementById('cardDob').innerText, x, 106);
+      ctx.fillText('Age: ' + document.getElementById('cardAge').innerText, x, 130);
+      ctx.fillText('Demo ID: ' + document.getElementById('cardDemoId').innerText, x, 154);
+      ctx.fillText('Constituency: KANDUKUR', x, 178);
+      ctx.fillText('State: ANDHRA PRADESH', x, 202);
+
+      // Photo
+      const photoImg = document.getElementById('cardFinalPhoto');
+      try {
+        ctx.drawImage(photoImg, 18, 66, 110, 130);
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(18, 66, 110, 130);
+      } catch (e) {
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillRect(18, 66, 110, 130);
+      }
+
+      // Disclaimer
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(20, 240);
+      ctx.lineTo(420, 240);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillStyle = '#334155';
+      ctx.fillText('SAMPLE / FOR SCIENCE EXHIBITION ONLY', 220, 256);
+      ctx.font = '9.5px sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Not issued or verified by the Government of India.', 220, 270);
+
+      const link = document.createElement('a');
+      link.download = 'VOTE18_Sample_Voter_ID.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Restart Demo
+    function restartDemo() {
+      stopWebcam();
+      goToStep('stepWelcome');
+    }
+
+    // Initial check
+    updateAgePreview();
+  </script>
+</body>
+</html>
