@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VOTE 18 — Election Commission of India | Smart Voter Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&family=Outfit:wght@600;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --eci-blue: #003366;
+      --eci-dark: #0f172a;
+      --saffron: #ea580c;
+      --saffron-light: #fff7ed;
+      --emerald: #059669;
+      --emerald-light: #ecfdf5;
+      --crimson: #dc2626;
+      --crimson-light: #fef2f2;
+      --border-gray: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --btn-blue: #0b63e5;
+      --btn-blue-hover: #0952c2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Noto Sans Telugu', system-ui, -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #f8fafc;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Government-style National Top Banner */
+    .gov-strip {
+      width: 100%;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 11px;
+      padding: 6px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ea580c;
+    }
+
+    .gov-strip .gov-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    /* Main Portal Header */
+    .main-header {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #003366, #0b63e5);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: 0 2px 8px rgba(11, 99, 229, 0.25);
+    }
+
+    .brand-texts h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #003366;
+      line-height: 1.1;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-texts p {
+      font-size: 10.5px;
+      color: #64748b;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .header-user-tag {
+      font-size: 11px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: none;
+    }
+
+    /* Screen Wrapper */
+    .viewport-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 20px 16px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .step-screen {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .step-screen.active {
+      display: flex;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Primary Cards */
+    .portal-card {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .portal-card-header {
+      margin-bottom: 16px;
+    }
+
+    .portal-card-header .icon-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 12px;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+    }
+
+    .portal-card-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f2942;
+      line-height: 1.25;
+    }
+
+    .portal-card-header p {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+
+    /* Buttons */
+    .btn-action {
+      width: 100%;
+      background: #0b63e5;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.25);
+      transition: all 0.15s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      background: #0952c2;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+    }
+
+    /* 5-Second Processing Widget */
+    .proc-widget {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 32px 18px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      margin-bottom: 20px;
+    }
+
+    .proc-dial {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: #eff6ff;
+      border: 3px solid #0b63e5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.15);
+      animation: pulseDial 1s infinite alternate;
+    }
+
+    @keyframes pulseDial {
+      from { transform: scale(1); }
+      to { transform: scale(1.04); }
+    }
+
+    .proc-sec {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0b63e5;
+      line-height: 1;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .proc-lbl {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .proc-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 16px 0 10px;
+    }
+
+    .proc-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0b63e5, #003366);
+      border-radius: 999px;
+      transition: width 0.1s linear;
+    }
+
+    .proc-message {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1e293b;
+      min-height: 20px;
+    }
+
+    /* Clean Input Groups & Neet Validations */
+    .form-group {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .form-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 15px;
+      color: #0f172a;
+      background: #ffffff;
+      outline: none;
+      font-weight: 600;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: #0b63e5;
+      box-shadow: 0 0 0 3px rgba(11, 99, 229, 0.12);
+    }
+
+    .form-input.is-invalid {
+      border-color: #dc2626 !important;
+      background-color: #fef2f2;
+    }
+
+    .form-input.is-valid {
+      border-color: #059669 !important;
+      background-color: #f0fdf4;
+    }
+
+    .validation-feedback {
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .validation-feedback.error {
+      color: #dc2626;
+      display: block;
+    }
+
+    .validation-feedback.success {
+      color: #059669;
+      display: block;
+    }
+
+    .input-hint {
+      font-size: 10.5px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Tabs on Login */
+    .auth-tab-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+
+    .auth-tab-btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .auth-tab-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Camera / Photo Capture Area */
+    .photo-area-box {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .photo-frame {
+      width: 110px;
+      height: 130px;
+      object-fit: cover;
+      border: 1.5px solid #64748b;
+      border-radius: 4px;
+      margin: 0 auto 10px;
+      display: block;
+      background: #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    #webcamVideo {
+      width: 100%;
+      max-width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #0b63e5;
+      display: none;
+      margin: 0 auto 10px;
+      transform: scaleX(-1);
+    }
+
+    /* ==========================================
+       BIOMETRIC FINGERPRINT SCANNER WIDGET
+       ========================================== */
+    .biometric-scanner-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 16px 14px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .scanner-pad-wrap {
+      position: relative;
+      display: inline-block;
+      margin: 14px auto 10px;
+    }
+
+    .scanner-pad {
+      position: relative;
+      width: 135px;
+      height: 160px;
+      background: #0f172a;
+      border-radius: 24px;
+      border: 3px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 10px 24px -5px rgba(15, 23, 42, 0.4), inset 0 0 25px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .scanner-pad:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 12px 28px -4px rgba(11, 99, 229, 0.35), inset 0 0 20px rgba(11, 99, 229, 0.2);
+    }
+
+    .scanner-pad.scanning {
+      border-color: #38bdf8;
+      background: radial-gradient(circle at center, #03396c 0%, #082f49 50%, #0f172a 90%);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.75), inset 0 0 30px rgba(14, 165, 233, 0.45);
+      animation: padPulse 1.2s infinite alternate;
+    }
+
+    .scanner-pad.success {
+      border-color: #10b981;
+      background: radial-gradient(circle at center, #064e3b 0%, #022c22 55%, #0f172a 90%);
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.8), inset 0 0 30px rgba(16, 185, 129, 0.4);
+    }
+
+    @keyframes padPulse {
+      0% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.5), inset 0 0 20px rgba(14, 165, 233, 0.3); }
+      100% { box-shadow: 0 0 45px rgba(56, 189, 248, 0.95), inset 0 0 35px rgba(56, 189, 248, 0.55); }
+    }
+
+    .fingerprint-svg {
+      width: 86px;
+      height: 105px;
+      color: #64748b;
+      transition: all 0.3s ease;
+    }
+
+    .scanner-pad.scanning .fingerprint-svg {
+      color: #38bdf8;
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.95)) drop-shadow(0 0 22px rgba(14, 165, 233, 0.75));
+      animation: fpPulseGlow 1.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes fpPulseGlow {
+      0% { filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 16px rgba(14, 165, 233, 0.5)); transform: scale(1); }
+      100% { filter: drop-shadow(0 0 14px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(56, 189, 248, 0.9)); transform: scale(1.03); }
+    }
+
+    .scanner-pad.success .fingerprint-svg {
+      color: #34d399;
+      filter: drop-shadow(0 0 14px rgba(52, 211, 153, 0.95)) drop-shadow(0 0 25px rgba(16, 185, 129, 0.7));
+    }
+
+    .scanner-laser {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #0ea5e9, #38bdf8, transparent);
+      box-shadow: 0 0 16px 4px #0ea5e9, 0 0 30px 6px rgba(56, 189, 248, 0.85);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scanner-pad.scanning .scanner-laser {
+      opacity: 1;
+      animation: scanLaser 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes scanLaser {
+      0% { top: 6%; }
+      100% { top: 90%; }
+    }
+
+    .sensor-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 32px;
+      border: 2px dashed rgba(14, 165, 233, 0.3);
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .sensor-ring-outer {
+      position: absolute;
+      inset: -15px;
+      border-radius: 38px;
+      border: 1.5px dotted rgba(56, 189, 248, 0.2);
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .scanner-pad.scanning ~ .sensor-ring {
+      border-color: rgba(56, 189, 248, 0.95);
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.55);
+      animation: spinRing 5s linear infinite;
+    }
+
+    .scanner-pad.scanning ~ .sensor-ring-outer {
+      border-color: rgba(14, 165, 233, 0.75);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+      animation: spinRingReverse 8s linear infinite;
+    }
+
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spinRingReverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .scanner-status-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.4;
+      transition: all 0.25s;
+    }
+
+    .scanner-status-box.scanning {
+      background: #f0f9ff;
+      border: 1.5px solid #38bdf8;
+      color: #0284c7;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+    }
+
+    .scanner-status-box.success {
+      background: #ecfdf5;
+      border-color: #34d399;
+      color: #047857;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+
+    /* ==========================================
+       AUTHENTIC ELECTOR PHOTO IDENTITY CARD
+       ========================================== */
+    .elector-card {
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid #003366;
+      border-radius: 14px;
+      padding: 16px 14px 12px;
+      box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 22px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .elector-card-header {
+      text-align: center;
+      border-bottom: 1.5px solid #003366;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .elector-card-header .eci-flag {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .elector-card-header .eci-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #003366;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .elector-card-header .eci-telugu {
+      font-family: 'Noto Sans Telugu', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #ea580c;
+      margin-top: 1px;
+    }
+
+    .elector-card-grid {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .elector-photo-col {
+      width: 105px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .elector-photo-img {
+      width: 105px;
+      height: 125px;
+      object-fit: cover;
+      border: 1.5px solid #334155;
+      border-radius: 3px;
+      display: block;
+      background: #e2e8f0;
+    }
+
+    .elector-holo-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fde047 10%, #ca8a04 50%, #854d0e 100%);
+      border: 1px solid #a16207;
+      margin: 6px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .elector-details-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 11.5px;
+      color: #0f172a;
+    }
+
+    .detail-line {
+      line-height: 1.35;
+    }
+
+    .detail-label {
+      font-size: 9.5px;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .detail-value {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .detail-value.highlight {
+      color: #003366;
+    }
+
+    .elector-card-footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9.5px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .epic-number-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #003366;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Print media */
+    @media print {
+      body * { visibility: hidden; }
+      #printableElectorCard, #printableElectorCard * { visibility: visible; }
+      #printableElectorCard {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        border: 2px solid #000;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Government Strip -->
+  <aside class="gov-strip">
+    <div class="gov-title">
+      <span>🇮🇳</span>
+      <span>భారత ప్రభుత్వం • GOVERNMENT OF INDIA</span>
+    </div>
+    <span style="font-weight:700; color:#ea580c;">VOTE 18 PORTAL</span>
+  </aside>
+
+  <!-- Main Sticky Header -->
+  <header class="main-header">
+    <div class="header-brand">
+      <div class="brand-icon-box">18</div>
+      <div class="brand-texts">
+        <h1>VOTE 18</h1>
+        <p>ELECTION COMMISSION OF INDIA</p>
+      </div>
+    </div>
+    <div id="loggedInUserTag" class="header-user-tag">
+      👤 <span id="userTagText">Citizen</span>
+    </div>
+  </header>
+
+  <!-- Dynamic Step Container -->
+  <main class="viewport-container">
+
+    <!-- ==============================================
+         STEP 1: OFFICIAL LOGIN PAGE (SHOWN FIRST)
+         ============================================== -->
+    <div id="screenLogin" class="step-screen active">
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <div class="icon-badge">🔐</div>
+          <h2>Citizen Login Portal</h2>
+          <p>Sign in with your registered Mobile Number or Citizen ID</p>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="auth-tab-bar">
+          <button type="button" class="auth-tab-btn active" id="tabLoginBtn" onclick="setAuthMode('login')">Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tabRegBtn" onclick="setAuthMode('register')">Register</button>
+        </div>
+
+        <form id="authForm" onsubmit="handleAuthSubmit(event)">
+          <!-- Name field for registration (Optional) -->
+          <div class="form-group" id="regNameGroup" style="display: none;">
+            <label class="form-label" for="loginName">Applicant Full Name (Optional / ఐచ్ఛికం)</label>
+            <input
+              type="text"
+              id="loginName"
+              class="form-input"
+              placeholder="Enter Full Name (Optional)"
+            />
+          </div>
+
+          <!-- Mobile / Email -->
+          <div class="form-group">
+            <label class="form-label" for="loginIdentifier">Mobile Number or Email</label>
+            <input
+              type="text"
+              id="loginIdentifier"
+              class="form-input"
+              placeholder="10-Digit Mobile or Email ID"
+              oninput="validateIdentifier(this)"
+              required
+            />
+            <div class="validation-feedback" id="idFeedback"></div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password / పాస్‌వర్డ్</label>
+            <input
+              type="password"
+              id="loginPassword"
+              class="form-input"
+              placeholder="••••••••"
+              oninput="validatePassword(this)"
+              required
+            />
+            <div class="validation-feedback" id="pwdFeedback"></div>
+          </div>
+
+          <button type="submit" class="btn-action" id="authSubmitBtn" style="margin-top: 8px;">
+            <span id="authBtnLabel">SIGN IN & CONTINUE</span> →
+          </button>
+        </form>
+
+        <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #f1f5f9;">
+          <button type="button" class="btn-secondary" onclick="quickFillCitizen()">
+            ⚡ 1-Click Fast Login
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 2: WELCOME TO VOTE 18
+         ============================================== -->
+    <div id="screenWelcome" class="step-screen">
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <div class="icon-badge">🇮🇳</div>
+          <h2>Welcome to VOTE 18</h2>
+          <p>National Voter Verification & Smart Electoral Registration Portal</p>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:14px; text-align:left; font-size:12.5px; margin-bottom:18px;">
+          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="color:#64748b;">Applicant:</span>
+            <strong id="welcomeCitizenName" style="color:#0f2942;">XXXXXX XXXXXX</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="color:#64748b;">Assembly Constituency:</span>
+            <strong style="color:#003366;">XXXXXX</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:4px 0;">
+            <span style="color:#64748b;">State:</span>
+            <strong style="color:#059669;">Andhra Pradesh</strong>
+          </div>
+        </div>
+
+        <p style="font-size:12px; color:#64748b; line-height:1.5; margin-bottom:18px;">
+          Proceed to Aadhaar-based demographic verification and age eligibility validation for Form 6 voter identity card generation.
+        </p>
+
+        <button class="btn-action" onclick="onEnterWelcome()">
+          <span>ENTER</span> →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 3: 5 SECONDS PROCESSING (Gateway)
+         ============================================== -->
+    <div id="screenProc1" class="step-screen">
+      <div class="proc-widget">
+        <div class="proc-dial">
+          <span class="proc-sec" id="p1Sec">5</span>
+          <span class="proc-lbl">SECONDS</span>
+        </div>
+        <div class="proc-bar-bg">
+          <div class="proc-bar-fill" id="p1Bar"></div>
+        </div>
+        <p class="proc-message" id="p1Msg">Connecting to National Voter Service Gateway...</p>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 4: AADHAAR VERIFICATION
+         ============================================== -->
+    <div id="screenAadhaar" class="step-screen">
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <div class="icon-badge">💳</div>
+          <h2>Aadhaar Identity Verification</h2>
+          <p>Enter your 12-digit Aadhaar Number for demographic verification</p>
+        </div>
+
+        <form onsubmit="handleAadhaarSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="aadhaarInput">Aadhaar Number (12 Digits)</label>
+            <input
+              type="text"
+              id="aadhaarInput"
+              class="form-input"
+              style="font-family:'Space Mono', monospace; letter-spacing:2px; text-align:center; font-size:18px;"
+              placeholder="XXXX XXXX XXXX"
+              maxlength="14"
+              oninput="handleAadhaarInput(this)"
+              required
+            />
+            <div class="validation-feedback" id="aadhaarFeedback"></div>
+            <p class="input-hint">Rule: Must be 12 digits. Cannot begin with 0 or 1.</p>
+          </div>
+
+          <div style="text-align:left; margin-bottom:16px;">
+            <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:#334155; cursor:pointer;">
+              <input type="checkbox" id="consentCheckbox" checked style="margin-top:2px;" required />
+              <span>I give consent to verify my demographic details for electoral enrollment purposes.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-action">
+            <span>VERIFY AADHAAR</span> →
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 5: 5 SECONDS PROCESSING (Aadhaar Verification)
+         ============================================== -->
+    <div id="screenProc2" class="step-screen">
+      <div class="proc-widget">
+        <div class="proc-dial">
+          <span class="proc-sec" id="p2Sec">5</span>
+          <span class="proc-lbl">SECONDS</span>
+        </div>
+        <div class="proc-bar-bg">
+          <div class="proc-bar-fill" id="p2Bar"></div>
+        </div>
+        <p class="proc-message" id="p2Msg">Verifying Aadhaar records & token authentication...</p>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 6: PERSONAL DETAILS & DATE OF BIRTH
+         ============================================== -->
+    <div id="screenDob" class="step-screen">
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <div class="icon-badge">📅</div>
+          <h2>Electoral Demographics & DOB</h2>
+          <p>Provide your official particulars and Date of Birth</p>
+        </div>
+
+        <form onsubmit="handleDobSubmit(event)">
+          <!-- Full Name (Optional) -->
+          <div class="form-group">
+            <label class="form-label" for="applicantFullName">Full Name (Optional / ఐచ్ఛికం)</label>
+            <input
+              type="text"
+              id="applicantFullName"
+              class="form-input"
+              placeholder="Enter Full Name (Optional)"
+              value=""
+            />
+          </div>
+
+          <!-- Relative Name (Optional) -->
+          <div class="form-group">
+            <label class="form-label" for="relativeFullName">Father / Mother / Husband Name (Optional / ఐచ్ఛికం)</label>
+            <input
+              type="text"
+              id="relativeFullName"
+              class="form-input"
+              placeholder="Enter Relative Name (Optional)"
+              value=""
+            />
+          </div>
+
+          <!-- Gender -->
+          <div class="form-group">
+            <label class="form-label" for="genderSelect">Gender</label>
+            <select id="genderSelect" class="form-input" style="font-size:14px;">
+              <option value="MALE">Male (పురుషుడు)</option>
+              <option value="FEMALE">Female (మహిళ)</option>
+              <option value="THIRD GENDER">Third Gender (ఇతరులు)</option>
+            </select>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="form-group">
+            <label class="form-label" for="dobPicker">Date of Birth (పుట్టిన తేదీ) *</label>
+            <input
+              type="date"
+              id="dobPicker"
+              class="form-input"
+              style="text-align:center; font-size:16px;"
+              onchange="handleDobChange(this)"
+              required
+            />
+            <div class="validation-feedback" id="dobFeedback"></div>
+            
+            <div id="dobLiveCalc" style="margin-top:8px; padding:8px; background:#eff6ff; border-radius:8px; font-size:12px; font-weight:700; color:#1e40af; display:none;">
+              Calculated Age: <span id="dobLiveAgeVal">0</span> Years
+            </div>
+          </div>
+
+          <!-- Assembly Constituency (Masked XXXXXX) -->
+          <div class="form-group">
+            <label class="form-label">Assembly Constituency & State</label>
+            <input
+              type="text"
+              class="form-input"
+              value="XXXXXX, ANDHRA PRADESH"
+              disabled
+              style="background:#f1f5f9; color:#475569; font-weight:700;"
+            />
+          </div>
+
+          <button type="submit" class="btn-action">
+            <span>PROCEED TO BIOMETRIC VERIFICATION</span> →
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 7: 5 SECONDS PROCESSING (Biometric Terminal)
+         ============================================== -->
+    <div id="screenProc3" class="step-screen">
+      <div class="proc-widget">
+        <div class="proc-dial">
+          <span class="proc-sec" id="p3Sec">5</span>
+          <span class="proc-lbl">SECONDS</span>
+        </div>
+        <div class="proc-bar-bg">
+          <div class="proc-bar-fill" id="p3Bar"></div>
+        </div>
+        <p class="proc-message" id="p3Msg">Connecting to UIDAI Biometric Terminal & Gateway...</p>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 7B: BIOMETRIC FINGERPRINT AUTHENTICATION
+         ============================================== -->
+    <div id="screenFingerprint" class="step-screen">
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <div class="icon-badge">👆</div>
+          <h2>Biometric Authentication</h2>
+          <p>Place your finger on the optical sensor for Aadhaar biometric verification</p>
+        </div>
+
+        <!-- Demographic Recap Strip -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px 14px; text-align:left; font-size:12px; margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="color:#64748b;">Aadhaar Suffix:</span>
+            <strong id="fpAadhaarVal" style="font-family:'Space Mono', monospace; color:#0f172a;">XXXX XXXX 1098</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="color:#64748b;">Applicant Record:</span>
+            <strong id="fpCitizenName" style="color:#003366;">XXXXXX XXXXXX</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0;">
+            <span style="color:#64748b;">Calculated Age:</span>
+            <strong id="fpAgeVal" style="color:#059669;">21 Years</strong>
+          </div>
+        </div>
+
+        <!-- Biometric Scanner Pad -->
+        <div class="biometric-scanner-card">
+          <div style="font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.5px; text-transform:uppercase;">
+            UIDAI STQC Level-0 Optical Sensor
+          </div>
+
+          <div class="scanner-pad-wrap">
+            <div id="scannerPad" class="scanner-pad" onclick="startFingerprintScan()">
+              <div class="scanner-laser"></div>
+              <!-- Detailed Fingerprint SVG -->
+              <svg class="fingerprint-svg" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60 20 C40 20 25 35 25 55 C25 80 35 105 45 125" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 30 C45 30 35 42 35 58 C35 85 45 105 52 120" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 40 C50 40 45 48 45 60 C45 80 52 98 58 115" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 50 C55 50 52 54 52 62 C52 75 58 90 62 105" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 62 C60 68 62 76 65 85" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 20 C80 20 95 35 95 55 C95 80 85 105 75 125" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 30 C75 30 85 42 85 58 C85 85 75 105 68 120" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 40 C70 40 75 48 75 60 C75 80 68 98 62 115" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 50 C65 50 68 54 68 62 C68 75 62 90 58 105" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 10 C35 10 15 30 15 55 C15 90 28 118 38 135" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 10 C85 10 105 30 105 55 C105 90 92 118 82 135" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="sensor-ring"></div>
+            <div class="sensor-ring-outer"></div>
+          </div>
+
+          <!-- 10-Second Glowing Live Timer Badge -->
+          <div id="fpTimerBadge" style="display:none; margin: 6px auto 10px; padding: 5px 16px; background: #e0f2fe; border: 1.5px solid #38bdf8; border-radius: 20px; font-size: 12px; font-weight: 800; color: #0284c7; width: fit-content; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);">
+            ⏳ SCANNING BIOMETRICS: <span id="fpTimerSeconds" style="font-family:'Space Mono', monospace; font-size:14px; color:#0284c7; font-weight:800;">10</span>s REMAINING
+          </div>
+
+          <!-- Live Scanner Status Box -->
+          <div id="scannerStatusBox" class="scanner-status-box">
+            <span id="scannerStatusText">Touch sensor or click button to scan fingerprint (వేలిముద్ర వేయండి)</span>
+          </div>
+
+          <!-- Progress bar during scan -->
+          <div id="fpProgressBarContainer" style="width:100%; height:6px; background:#e2e8f0; border-radius:3px; margin-top:10px; overflow:hidden; display:none;">
+            <div id="fpProgressBarFill" style="height:100%; width:0%; background:linear-gradient(90deg, #0284c7, #38bdf8, #0ea5e9); box-shadow:0 0 10px rgba(14, 165, 233, 0.8); transition:width 0.1s linear;"></div>
+          </div>
+        </div>
+
+        <button type="button" id="scanFingerBtn" class="btn-action" style="margin-top:14px;" onclick="startFingerprintScan()">
+          <span>👆 SCAN FINGERPRINT NOW</span> →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 8A: NOT ELIGIBLE (Below 18)
+         ============================================== -->
+    <div id="screenNotEligible" class="step-screen">
+      <div class="portal-card" style="border-color:#fca5a5; background:#fffafa;">
+        <div class="portal-card-header">
+          <div class="icon-badge" style="background:#fee2e2; border-color:#fecaca;">❌</div>
+          <h2 style="color:#dc2626;">Under 18 — Not Eligible for Voting</h2>
+          <p style="color:#991b1b;">
+            As per the Constitution of India (Article 326) and Representation of the People Act, 1950, citizen must have attained <strong>18 years of age</strong> on the qualifying date to register in the Electoral Roll.
+          </p>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid #fecaca; border-radius:12px; padding:14px; text-align:left; font-size:12.5px; margin-bottom:18px;">
+          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #fecaca;">
+            <span style="color:#64748b;">Your Calculated Age:</span>
+            <strong id="ineligibleAgeDisplay" style="color:#dc2626; font-size:14px;">15 Years</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #fecaca;">
+            <span style="color:#64748b;">Qualifying Threshold:</span>
+            <strong style="color:#0f172a;">18.0 Years (18 ఏళ్లు)</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:4px 0;">
+            <span style="color:#64748b;">Eligibility Status:</span>
+            <strong id="timeToWaitText" style="color:#ea580c;">~ 3 Years Remaining</strong>
+          </div>
+        </div>
+
+        <button class="btn-action" onclick="restartApplicationFlow()">
+          <span>START AGAIN</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 8B: 18+ ELIGIBLE & PHOTO CAPTURE
+         ============================================== -->
+    <div id="screenEligible" class="step-screen">
+      <div class="portal-card" style="border-color:#86efac; background:#fbfdfb;">
+        <div class="portal-card-header">
+          <div class="icon-badge" style="background:#dcfce7; border-color:#bbf7d0;">✅</div>
+          <h2 style="color:#15803d;">Eligible for Voter Registration</h2>
+          <p style="color:#166534;">Age criteria confirmed (18+). Please capture or upload your official photograph for your Voter ID Card.</p>
+        </div>
+
+        <div class="photo-area-box">
+          <label class="form-label" style="text-align:center; margin-bottom:8px;">Applicant Photograph (ఫోటో)</label>
+          <img id="applicantFaceImg" class="photo-frame" src="" alt="Applicant Photo" />
+          <video id="webcamVideo" autoplay playsinline></video>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <button type="button" class="btn-secondary" id="camActionBtn" onclick="toggleCameraCapture()">
+              📷 Capture Live Photo via Camera
+            </button>
+            <label class="btn-secondary" style="cursor:pointer; text-align:center;">
+              📁 Upload Photograph File
+              <input type="file" id="photoFileInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(this)" />
+            </label>
+            <button type="button" class="btn-secondary" onclick="useOfficialPortrait()">
+              👤 Use Default Official Portrait
+            </button>
+          </div>
+        </div>
+
+        <div id="photoValidationMsg" class="validation-feedback error" style="margin-top:10px; text-align:center;">
+          Please capture or upload a photograph to proceed.
+        </div>
+
+        <button type="button" class="btn-action" style="margin-top:14px;" onclick="handlePhotoConfirm()">
+          <span>GENERATE VOTER ID CARD</span> →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 9: 5 SECONDS PROCESSING (Card Generation)
+         ============================================== -->
+    <div id="screenProc4" class="step-screen">
+      <div class="proc-widget">
+        <div class="proc-dial">
+          <span class="proc-sec" id="p4Sec">5</span>
+          <span class="proc-lbl">SECONDS</span>
+        </div>
+        <div class="proc-bar-bg">
+          <div class="proc-bar-fill" id="p4Bar"></div>
+        </div>
+        <p class="proc-message" id="p4Msg">Generating official Elector Photo Identity Card...</p>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 10: OFFICIAL VOTER ID CARD (EPIC CARD)
+         ============================================== -->
+    <div id="screenCardResult" class="step-screen">
+
+      <!-- THE OFFICIAL CARD -->
+      <div class="elector-card" id="printableElectorCard">
+        <!-- Header -->
+        <div class="elector-card-header">
+          <div class="eci-flag">🇮🇳</div>
+          <div class="eci-title">ELECTION COMMISSION OF INDIA</div>
+          <div class="eci-telugu">భారత ఎన్నికల సంఘం · ELECTOR PHOTO IDENTITY CARD</div>
+        </div>
+
+        <!-- Body -->
+        <div class="elector-card-grid">
+          <div class="elector-photo-col">
+            <img id="cardVoterPhoto" class="elector-photo-img" src="" alt="Elector Photo" />
+            <div class="elector-holo-badge" title="National Holographic Emblem">🇮🇳</div>
+          </div>
+
+          <div class="elector-details-col">
+            <div class="detail-line">
+              <span class="detail-label">Elector's Name:</span>
+              <span class="detail-value highlight" id="cardNameVal">XXXXXX XXXXXX</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-label">Father's Name:</span>
+              <span class="detail-value" id="cardFatherVal">XXXXXX XXXXXX</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-label">Gender & Date of Birth:</span>
+              <span class="detail-value" id="cardGenderDobVal">MALE · DOB: 2004-05-14 (21 Yrs)</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-label">Assembly Constituency:</span>
+              <span class="detail-value highlight">XXXXXX</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-label">District & State:</span>
+              <span class="detail-value">XXXXXX, ANDHRA PRADESH</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-label">Polling Station:</span>
+              <span class="detail-value" style="font-size:10.5px;">Polling Station No. XXXXXX</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-label">Biometric Status:</span>
+              <span class="detail-value" style="font-size:10.5px; color:#059669; font-weight:700;">✓ Verified (Fingerprint Match)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer with EPIC -->
+        <div class="elector-card-footer">
+          <div>
+            <span>EPIC NO: </span>
+            <span class="epic-number-badge" id="cardEpicVal">AND7849201</span>
+          </div>
+          <div>
+            <span>Part No: XXX • AC: XXXXXX</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <button class="btn-action" onclick="restartApplicationFlow()">
+        <span>START AGAIN</span>
+      </button>
+
+      <div style="display:flex; gap:10px; width:100%; margin-top:10px;">
+        <button class="btn-secondary" style="margin-top:0;" onclick="downloadElectorCard()">
+          📥 Download Card (PNG)
+        </button>
+        <button class="btn-secondary" style="margin-top:0;" onclick="window.print()">
+          🖨️ Print Voter ID
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // State Store
+    let authMode = 'login'; // 'login' | 'register'
+    let currentUserName = 'XXXXXX XXXXXX';
+    let currentRelativeName = 'XXXXXX XXXXXX';
+    let currentGender = 'MALE';
+    let currentDob = '2004-05-14';
+    let currentAge = 21;
+    let currentAadhaar = '987654321098';
+    let userPhotoUrl = '';
+    let cameraMediaStream = null;
+
+    // Professional High-Res Portrait SVG Default
+    const defaultOfficialPortrait = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='110' height='130' viewBox='0 0 110 130'><rect width='110' height='130' fill='%23e2e8f0'/><circle cx='55' cy='50' r='28' fill='%23d4a373'/><path d='M36 46 Q55 36 74 46' stroke='%23222' stroke-width='4' fill='%23222'/><rect x='36' y='46' width='16' height='11' rx='2' fill='none' stroke='%23111' stroke-width='2'/><rect x='58' y='46' width='16' height='11' rx='2' fill='none' stroke='%23111' stroke-width='2'/><line x1='52' y1='51' x2='58' y2='51' stroke='%23111' stroke-width='2'/><path d='M44 68 Q55 76 66 68' stroke='%23111' stroke-width='2' fill='none'/><path d='M46 64 Q55 68 64 64' fill='%23444'/><path d='M20 130 C 20 92, 90 92, 90 130 Z' fill='%231e3a8a'/></svg>";
+    userPhotoUrl = defaultOfficialPortrait;
+    document.getElementById('applicantFaceImg').src = userPhotoUrl;
+
+    // Screen Switcher
+    function showScreen(screenId) {
+      const allScreens = [
+        'screenLogin', 'screenWelcome', 'screenProc1', 'screenAadhaar',
+        'screenProc2', 'screenDob', 'screenProc3', 'screenFingerprint',
+        'screenNotEligible', 'screenEligible', 'screenProc4', 'screenCardResult'
+      ];
+      allScreens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      const activeEl = document.getElementById(screenId);
+      if (activeEl) activeEl.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // 5-Second Processing Engine
+    function start5SecProcessing(procId, secId, barId, msgId, message, onDone) {
+      showScreen(procId);
+      let count = 5;
+      const secEl = document.getElementById(secId);
+      const barEl = document.getElementById(barId);
+      const msgEl = document.getElementById(msgId);
+
+      secEl.innerText = count;
+      barEl.style.width = '0%';
+      msgEl.innerText = message;
+
+      let elapsedMs = 0;
+      const interval = setInterval(() => {
+        elapsedMs += 100;
+        const pct = (elapsedMs / 5000) * 100;
+        barEl.style.width = pct + '%';
+
+        const rem = Math.ceil((5000 - elapsedMs) / 1000);
+        if (rem !== count && rem >= 0) {
+          count = rem;
+          secEl.innerText = count > 0 ? count : 1;
+        }
+
+        if (elapsedMs >= 5000) {
+          clearInterval(interval);
+          barEl.style.width = '100%';
+          secEl.innerText = '0';
+          setTimeout(onDone, 200);
+        }
+      }, 100);
+    }
+
+    // ============================================
+    // VALIDATIONS ENGINE
+    // ============================================
+    function validateName(input) {
+      const val = input.value.trim();
+      const fb = input.parentElement.querySelector('.validation-feedback');
+      if (val.length < 3) {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        if (fb) {
+          fb.innerText = 'Name must be at least 3 letters.';
+          fb.className = 'validation-feedback error';
+        }
+        return false;
+      } else {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        if (fb) {
+          fb.innerText = '✓ Valid Name';
+          fb.className = 'validation-feedback success';
+        }
+        return true;
+      }
+    }
+
+    function validateIdentifier(input) {
+      const val = input.value.trim();
+      const fb = document.getElementById('idFeedback');
+      const isPhone = /^[6-9]\d{9}$/.test(val);
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+
+      if (isPhone || isEmail) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        fb.innerText = isPhone ? '✓ Valid 10-Digit Mobile' : '✓ Valid Email ID';
+        fb.className = 'validation-feedback success';
+        return true;
+      } else {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        fb.innerText = 'Enter valid 10-digit Indian Mobile (starts with 6–9) or Email.';
+        fb.className = 'validation-feedback error';
+        return false;
+      }
+    }
+
+    function validatePassword(input) {
+      const val = input.value;
+      const fb = document.getElementById('pwdFeedback');
+      if (val.length >= 6) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        fb.innerText = '✓ Password strength verified';
+        fb.className = 'validation-feedback success';
+        return true;
+      } else {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        fb.innerText = 'Password must be at least 6 characters.';
+        fb.className = 'validation-feedback error';
+        return false;
+      }
+    }
+
+    function handleAadhaarInput(input) {
+      let raw = input.value.replace(/\D/g, '').substring(0, 12);
+      let formatted = '';
+      for (let i = 0; i < raw.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += ' ';
+        formatted += raw[i];
+      }
+      input.value = formatted;
+
+      const fb = document.getElementById('aadhaarFeedback');
+      if (raw.length === 12) {
+        const firstDigit = parseInt(raw[0], 10);
+        if (firstDigit < 2) {
+          input.classList.add('is-invalid');
+          input.classList.remove('is-valid');
+          fb.innerText = 'Aadhaar cannot begin with 0 or 1 (UIDAI standard rule).';
+          fb.className = 'validation-feedback error';
+        } else {
+          input.classList.remove('is-invalid');
+          input.classList.add('is-valid');
+          fb.innerText = '✓ 12-Digit Aadhaar format verified';
+          fb.className = 'validation-feedback success';
+        }
+      } else {
+        input.classList.remove('is-valid');
+        if (raw.length > 0) {
+          input.classList.add('is-invalid');
+          fb.innerText = `Enter all 12 digits (${raw.length}/12 entered).`;
+          fb.className = 'validation-feedback error';
+        } else {
+          input.classList.remove('is-invalid');
+          fb.className = 'validation-feedback';
+        }
+      }
+    }
+
+    // ============================================
+    // STEP 1: AUTH CONTROLLER
+    // ============================================
+    function setAuthMode(mode) {
+      authMode = mode;
+      document.getElementById('tabLoginBtn').classList.toggle('active', mode === 'login');
+      document.getElementById('tabRegBtn').classList.toggle('active', mode === 'register');
+      document.getElementById('regNameGroup').style.display = mode === 'register' ? 'block' : 'none';
+      document.getElementById('authBtnLabel').innerText = mode === 'register' ? 'REGISTER & CONTINUE' : 'SIGN IN & CONTINUE';
+    }
+
+    function quickFillCitizen() {
+      document.getElementById('loginIdentifier').value = '9848012345';
+      document.getElementById('loginPassword').value = 'voter123';
+      validateIdentifier(document.getElementById('loginIdentifier'));
+      validatePassword(document.getElementById('loginPassword'));
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const idInput = document.getElementById('loginIdentifier');
+      const pwdInput = document.getElementById('loginPassword');
+
+      const isIdValid = validateIdentifier(idInput);
+      const isPwdValid = validatePassword(pwdInput);
+      let isNameValid = true;
+
+      if (authMode === 'register') {
+        isNameValid = validateName(document.getElementById('loginName'));
+        if (isNameValid) {
+          currentUserName = document.getElementById('loginName').value.trim();
+        }
+      }
+
+      if (!isIdValid || !isPwdValid || !isNameValid) return;
+
+      // Update header with logged in user (Clean Citizen tag, no personal name)
+      document.getElementById('loggedInUserTag').style.display = 'block';
+      document.getElementById('userTagText').innerText = 'Citizen';
+      document.getElementById('welcomeCitizenName').innerText = currentUserName;
+
+      showScreen('screenWelcome');
+    }
+
+    // ============================================
+    // STEP 2: WELCOME -> 5s Processing 1
+    // ============================================
+    function onEnterWelcome() {
+      start5SecProcessing(
+        'screenProc1',
+        'p1Sec',
+        'p1Bar',
+        'p1Msg',
+        'Connecting to citizen verification gateway...',
+        () => showScreen('screenAadhaar')
+      );
+    }
+
+    // ============================================
+    // STEP 4: AADHAAR SUBMIT -> 5s Processing 2
+    // ============================================
+    function handleAadhaarSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('aadhaarInput');
+      const raw = input.value.replace(/\D/g, '');
+
+      if (raw.length !== 12 || parseInt(raw[0], 10) < 2) {
+        handleAadhaarInput(input);
+        return;
+      }
+
+      if (!document.getElementById('consentCheckbox').checked) {
+        alert('Please tick the consent box to proceed.');
+        return;
+      }
+
+      currentAadhaar = raw;
+      start5SecProcessing(
+        'screenProc2',
+        'p2Sec',
+        'p2Bar',
+        'p2Msg',
+        'Verifying Aadhaar records & token authentication...',
+        () => {
+          // Pre-populate DOB with an 18+ date
+          if (!document.getElementById('dobPicker').value) {
+            document.getElementById('dobPicker').value = '2004-05-14';
+            handleDobChange(document.getElementById('dobPicker'));
+          }
+          showScreen('screenDob');
+        }
+      );
+    }
+
+    // ============================================
+    // STEP 6: DOB & DEMOGRAPHICS -> 5s Processing 3
+    // ============================================
+    function handleDobChange(input) {
+      const val = input.value;
+      const fb = document.getElementById('dobFeedback');
+      const ageBox = document.getElementById('dobLiveCalc');
+      const ageNum = document.getElementById('dobLiveAgeVal');
+
+      if (!val) {
+        input.classList.remove('is-valid', 'is-invalid');
+        ageBox.style.display = 'none';
+        return;
+      }
+
+      const bDate = new Date(val);
+      const now = new Date();
+      let age = now.getFullYear() - bDate.getFullYear();
+      const mDiff = now.getMonth() - bDate.getMonth();
+      if (mDiff < 0 || (mDiff === 0 && now.getDate() < bDate.getDate())) {
+        age--;
+      }
+
+      ageBox.style.display = 'block';
+      ageNum.innerText = age;
+
+      if (age < 0 || age > 120) {
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        fb.innerText = 'Please select a realistic Date of Birth.';
+        fb.className = 'validation-feedback error';
+      } else {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        fb.innerText = age >= 18 ? `✓ Age ${age} meets electoral threshold (18+)` : `Age ${age} is under 18 years`;
+        fb.className = age >= 18 ? 'validation-feedback success' : 'validation-feedback error';
+      }
+    }
+
+    function handleDobSubmit(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('applicantFullName');
+      const relativeInput = document.getElementById('relativeFullName');
+      const dobInput = document.getElementById('dobPicker');
+
+      if (!dobInput.value) {
+        alert('Please select your Date of Birth.');
+        return;
+      }
+
+      // Names are Optional as requested
+      const inputName = nameInput ? nameInput.value.trim() : '';
+      const inputRel = relativeInput ? relativeInput.value.trim() : '';
+
+      currentUserName = inputName || 'XXXXXX XXXXXX';
+      currentRelativeName = inputRel || 'XXXXXX XXXXXX';
+      currentGender = document.getElementById('genderSelect').value;
+      currentDob = dobInput.value;
+
+      const bDate = new Date(currentDob);
+      const now = new Date();
+      let age = now.getFullYear() - bDate.getFullYear();
+      const mDiff = now.getMonth() - bDate.getMonth();
+      if (mDiff < 0 || (mDiff === 0 && now.getDate() < bDate.getDate())) {
+        age--;
+      }
+      currentAge = age;
+
+      // Populate Biometric recap strip
+      const nameElem = document.getElementById('fpCitizenName');
+      const aadhaarElem = document.getElementById('fpAadhaarVal');
+      const ageElem = document.getElementById('fpAgeVal');
+
+      if (nameElem) nameElem.innerText = currentUserName;
+      if (aadhaarElem) aadhaarElem.innerText = currentAadhaar ? 'XXXX XXXX ' + currentAadhaar.slice(-4) : 'XXXX XXXX 1098';
+      if (ageElem) ageElem.innerText = currentAge + ' Years';
+
+      start5SecProcessing(
+        'screenProc3',
+        'p3Sec',
+        'p3Bar',
+        'p3Msg',
+        'Connecting to UIDAI Biometric Terminal & Initializing Sensor...',
+        () => {
+          resetFingerprintScanner();
+          showScreen('screenFingerprint');
+        }
+      );
+    }
+
+    // ============================================
+    // STEP 7B: BIOMETRIC FINGERPRINT CONTROLLER
+    // ============================================
+    let isFingerprintScanning = false;
+    let isFingerprintVerified = false;
+
+    function resetFingerprintScanner() {
+      isFingerprintScanning = false;
+      isFingerprintVerified = false;
+      const pad = document.getElementById('scannerPad');
+      const sBox = document.getElementById('scannerStatusBox');
+      const sText = document.getElementById('scannerStatusText');
+      const barBox = document.getElementById('fpProgressBarContainer');
+      const barFill = document.getElementById('fpProgressBarFill');
+      const btn = document.getElementById('scanFingerBtn');
+      const timerBadge = document.getElementById('fpTimerBadge');
+
+      if (pad) pad.className = 'scanner-pad';
+      if (sBox) sBox.className = 'scanner-status-box';
+      if (sText) sText.innerText = 'Touch sensor or click button to scan fingerprint (వేలిముద్ర వేయండి)';
+      if (barBox) barBox.style.display = 'none';
+      if (timerBadge) {
+        timerBadge.style.display = 'none';
+        timerBadge.style.background = '#e0f2fe';
+        timerBadge.style.borderColor = '#38bdf8';
+        timerBadge.style.color = '#0284c7';
+        timerBadge.innerHTML = '⏳ SCANNING BIOMETRICS: <span id="fpTimerSeconds" style="font-family:\'Space Mono\', monospace; font-size:14px; color:#0284c7; font-weight:800;">10</span>s REMAINING';
+      }
+      if (barFill) {
+        barFill.style.width = '0%';
+        barFill.style.background = 'linear-gradient(90deg, #0284c7, #38bdf8, #0ea5e9)';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>👆 SCAN FINGERPRINT NOW (10s SCAN)</span> →';
+      }
+    }
+
+    function startFingerprintScan() {
+      if (isFingerprintScanning || isFingerprintVerified) return;
+      isFingerprintScanning = true;
+
+      const pad = document.getElementById('scannerPad');
+      const sBox = document.getElementById('scannerStatusBox');
+      const sText = document.getElementById('scannerStatusText');
+      const barBox = document.getElementById('fpProgressBarContainer');
+      const barFill = document.getElementById('fpProgressBarFill');
+      const btn = document.getElementById('scanFingerBtn');
+      const timerBadge = document.getElementById('fpTimerBadge');
+
+      pad.className = 'scanner-pad scanning';
+      sBox.className = 'scanner-status-box scanning';
+      barBox.style.display = 'block';
+      if (timerBadge) timerBadge.style.display = 'block';
+      btn.disabled = true;
+
+      let elapsedMs = 0;
+      const totalTimeMs = 10000; // 10 Full Seconds of attractive blue scanning
+      const intervalMs = 100;
+
+      const scanInterval = setInterval(() => {
+        elapsedMs += intervalMs;
+        const progress = Math.min(100, (elapsedMs / totalTimeMs) * 100);
+        barFill.style.width = progress + '%';
+
+        const remainingSec = Math.max(1, Math.ceil((totalTimeMs - elapsedMs) / 1000));
+        const tSec = document.getElementById('fpTimerSeconds');
+        if (tSec) tSec.innerText = remainingSec;
+
+        btn.innerHTML = `<span>SCANNING BIOMETRICS (${remainingSec}s)...</span> ⏳`;
+
+        // Progressive 10-Second Biometric Verification Stages
+        if (elapsedMs < 2000) {
+          sText.innerText = `[Stage 1/5] Calibrating optical sensor & capturing epidermal ridges... (${remainingSec}s)`;
+        } else if (elapsedMs < 4000) {
+          sText.innerText = `[Stage 2/5] Extracting 128 biometric minutiae points & ridge flow... (${remainingSec}s)`;
+        } else if (elapsedMs < 6000) {
+          sText.innerText = `[Stage 3/5] Generating encrypted UIDAI 2048-bit Biometric Token... (${remainingSec}s)`;
+        } else if (elapsedMs < 8000) {
+          sText.innerText = `[Stage 4/5] Cross-matching with National Electoral Biometric Vault... (${remainingSec}s)`;
+        } else {
+          sText.innerText = `[Stage 5/5] Finalizing demographic liveness & biometric score... (${remainingSec}s)`;
+        }
+
+        if (elapsedMs >= totalTimeMs) {
+          clearInterval(scanInterval);
+          isFingerprintScanning = false;
+          isFingerprintVerified = true;
+
+          pad.className = 'scanner-pad success';
+          sBox.className = 'scanner-status-box success';
+          barFill.style.background = '#10b981';
+          barFill.style.boxShadow = '0 0 14px rgba(16, 185, 129, 0.9)';
+          sText.innerHTML = '✅ <strong>Biometric Match Confirmed!</strong> (UIDAI Match: 99.8%)';
+
+          if (timerBadge) {
+            timerBadge.style.background = '#ecfdf5';
+            timerBadge.style.borderColor = '#34d399';
+            timerBadge.style.color = '#047857';
+            timerBadge.innerHTML = '✓ BIOMETRIC MATCH CONFIRMED (10s VERIFICATION COMPLETE)';
+          }
+
+          btn.innerHTML = '<span>✓ VERIFIED SUCCESSFULLY</span>';
+
+          // Stay on success confirmation for a full 2 seconds so citizen can admire result
+          setTimeout(() => {
+            if (currentAge >= 18) {
+              showScreen('screenEligible');
+            } else {
+              document.getElementById('ineligibleAgeDisplay').innerText = `${currentAge} Years`;
+              const remYears = 18 - currentAge;
+              document.getElementById('timeToWaitText').innerText = `~ ${remYears} Year(s) Remaining`;
+              showScreen('screenNotEligible');
+            }
+          }, 2000);
+        }
+      }, intervalMs);
+    }
+
+    // ============================================
+    // STEP 8: PHOTO CAPTURE & UPLOAD
+    // ============================================
+    function useOfficialPortrait() {
+      userPhotoUrl = defaultOfficialPortrait;
+      document.getElementById('applicantFaceImg').src = userPhotoUrl;
+      document.getElementById('photoValidationMsg').style.display = 'none';
+      stopCameraStream();
+    }
+
+    function handlePhotoUpload(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (!file.type.startsWith('image/')) {
+          alert('Please upload a valid image file (JPG/PNG).');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          userPhotoUrl = e.target.result;
+          document.getElementById('applicantFaceImg').src = userPhotoUrl;
+          document.getElementById('photoValidationMsg').style.display = 'none';
+          stopCameraStream();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function toggleCameraCapture() {
+      const video = document.getElementById('webcamVideo');
+      const btn = document.getElementById('camActionBtn');
+
+      if (cameraMediaStream) {
+        // Snap frame
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth || 220;
+        canvas.height = video.videoHeight || 260;
+        const ctx = canvas.getContext('2d');
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        userPhotoUrl = canvas.toDataURL('image/png');
+        document.getElementById('applicantFaceImg').src = userPhotoUrl;
+        document.getElementById('photoValidationMsg').style.display = 'none';
+        stopCameraStream();
+      } else {
+        try {
+          cameraMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          video.srcObject = cameraMediaStream;
+          video.style.display = 'block';
+          btn.innerText = '📸 Click to Capture Photo';
+        } catch (err) {
+          alert('Camera could not be accessed. Using official portrait instead.');
+          useOfficialPortrait();
+        }
+      }
+    }
+
+    function stopCameraStream() {
+      if (cameraMediaStream) {
+        cameraMediaStream.getTracks().forEach(t => t.stop());
+        cameraMediaStream = null;
+      }
+      document.getElementById('webcamVideo').style.display = 'none';
+      document.getElementById('camActionBtn').innerText = '📷 Capture Live Photo via Camera';
+    }
+
+    function handlePhotoConfirm() {
+      if (!userPhotoUrl) {
+        document.getElementById('photoValidationMsg').style.display = 'block';
+        return;
+      }
+
+      start5SecProcessing(
+        'screenProc4',
+        'p4Sec',
+        'p4Bar',
+        'p4Msg',
+        'Generating official Elector Photo Identity Card...',
+        () => {
+          // Populate official card
+          document.getElementById('cardNameVal').innerText = currentUserName;
+          document.getElementById('cardFatherVal').innerText = currentRelativeName;
+          document.getElementById('cardGenderDobVal').innerText = `${currentGender} · DOB: ${currentDob} (${currentAge} Yrs)`;
+          document.getElementById('cardVoterPhoto').src = userPhotoUrl;
+
+          // Official EPIC prefix (e.g. AND7841920)
+          const randomEpic = 'AND' + Math.floor(1000000 + Math.random() * 9000000);
+          document.getElementById('cardEpicVal').innerText = randomEpic;
+
+          showScreen('screenCardResult');
+        }
+      );
+    }
+
+    // ============================================
+    // STEP 10: DOWNLOAD & RESTART
+    // ============================================
+    function downloadElectorCard() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 540;
+      canvas.height = 340;
+      const ctx = canvas.getContext('2d');
+
+      // Card Background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 540, 340);
+
+      // Border
+      ctx.strokeStyle = '#003366';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(4, 4, 532, 332);
+
+      // Header Banner
+      ctx.fillStyle = '#003366';
+      ctx.fillRect(4, 4, 532, 54);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 15px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ELECTION COMMISSION OF INDIA', 270, 26);
+
+      ctx.fillStyle = '#f97316';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('భారత ఎన్నికల సంఘం · ELECTOR PHOTO IDENTITY CARD', 270, 44);
+
+      // Details
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 9px sans-serif';
+
+      const x = 160;
+      ctx.fillText("ELECTOR'S NAME:", x, 85);
+      ctx.fillStyle = '#003366';
+      ctx.font = 'bold 13.5px sans-serif';
+      ctx.fillText(currentUserName, x, 102);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 9px sans-serif';
+      ctx.fillText("FATHER'S NAME:", x, 126);
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12.5px sans-serif';
+      ctx.fillText(currentRelativeName, x, 142);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 9px sans-serif';
+      ctx.fillText("GENDER & DATE OF BIRTH:", x, 166);
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText(`${currentGender} · DOB: ${currentDob} (${currentAge} Yrs)`, x, 182);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 9px sans-serif';
+      ctx.fillText("ASSEMBLY CONSTITUENCY:", x, 206);
+      ctx.fillStyle = '#003366';
+      ctx.font = 'bold 12.5px sans-serif';
+      ctx.fillText("XXXXXX, ANDHRA PRADESH", x, 222);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 9px sans-serif';
+      ctx.fillText("POLLING STATION:", x, 246);
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText("Polling Station No. XXXXXX", x, 258);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 8px sans-serif';
+      ctx.fillText("BIOMETRIC STATUS:", x, 272);
+      ctx.fillStyle = '#059669';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText("✓ VERIFIED (UIDAI FINGERPRINT MATCH)", x + 98, 272);
+
+      // Photo
+      const photoImg = document.getElementById('cardVoterPhoto');
+      try {
+        ctx.drawImage(photoImg, 22, 74, 115, 135);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(22, 74, 115, 135);
+      } catch (err) {
+        ctx.fillStyle = '#cbd5e1';
+        ctx.fillRect(22, 74, 115, 135);
+      }
+
+      // Hologram
+      ctx.fillStyle = '#ca8a04';
+      ctx.beginPath();
+      ctx.arc(80, 242, 16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('🇮🇳', 74, 247);
+
+      // Footer
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(4, 286, 532, 50);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(4, 286, 532, 50);
+
+      const epic = document.getElementById('cardEpicVal').innerText;
+      ctx.fillStyle = '#003366';
+      ctx.font = 'bold 12px monospace';
+      ctx.fillText('EPIC NO: ' + epic, 22, 316);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10.5px sans-serif';
+      ctx.fillText('Part No: XXX • AC: XXXXXX', 320, 316);
+
+      const link = document.createElement('a');
+      link.download = `Voter_ID_Card_${epic}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function restartApplicationFlow() {
+      stopCameraStream();
+      resetFingerprintScanner();
+      showScreen('screenWelcome');
+    }
+  </script>
+</body>
+</html>
