@@ -494,19 +494,21 @@
     }
 
     .scanner-pad.scanning {
-      border-color: #0ea5e9;
-      box-shadow: 0 0 30px rgba(14, 165, 233, 0.6), inset 0 0 25px rgba(14, 165, 233, 0.3);
+      border-color: #38bdf8;
+      background: radial-gradient(circle at center, #03396c 0%, #082f49 50%, #0f172a 90%);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.75), inset 0 0 30px rgba(14, 165, 233, 0.45);
       animation: padPulse 1.2s infinite alternate;
     }
 
     .scanner-pad.success {
       border-color: #10b981;
-      box-shadow: 0 0 35px rgba(16, 185, 129, 0.7), inset 0 0 25px rgba(16, 185, 129, 0.3);
+      background: radial-gradient(circle at center, #064e3b 0%, #022c22 55%, #0f172a 90%);
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.8), inset 0 0 30px rgba(16, 185, 129, 0.4);
     }
 
     @keyframes padPulse {
-      0% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
-      100% { box-shadow: 0 0 35px rgba(14, 165, 233, 0.85); }
+      0% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.5), inset 0 0 20px rgba(14, 165, 233, 0.3); }
+      100% { box-shadow: 0 0 45px rgba(56, 189, 248, 0.95), inset 0 0 35px rgba(56, 189, 248, 0.55); }
     }
 
     .fingerprint-svg {
@@ -518,12 +520,18 @@
 
     .scanner-pad.scanning .fingerprint-svg {
       color: #38bdf8;
-      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85));
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.95)) drop-shadow(0 0 22px rgba(14, 165, 233, 0.75));
+      animation: fpPulseGlow 1.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes fpPulseGlow {
+      0% { filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 16px rgba(14, 165, 233, 0.5)); transform: scale(1); }
+      100% { filter: drop-shadow(0 0 14px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(56, 189, 248, 0.9)); transform: scale(1.03); }
     }
 
     .scanner-pad.success .fingerprint-svg {
       color: #34d399;
-      filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.95));
+      filter: drop-shadow(0 0 14px rgba(52, 211, 153, 0.95)) drop-shadow(0 0 25px rgba(16, 185, 129, 0.7));
     }
 
     .scanner-laser {
@@ -531,21 +539,21 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
-      box-shadow: 0 0 12px 3px #0ea5e9;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #0ea5e9, #38bdf8, transparent);
+      box-shadow: 0 0 16px 4px #0ea5e9, 0 0 30px 6px rgba(56, 189, 248, 0.85);
       opacity: 0;
       pointer-events: none;
     }
 
     .scanner-pad.scanning .scanner-laser {
       opacity: 1;
-      animation: scanLaser 1.4s ease-in-out infinite alternate;
+      animation: scanLaser 1.5s ease-in-out infinite alternate;
     }
 
     @keyframes scanLaser {
-      0% { top: 8%; }
-      100% { top: 88%; }
+      0% { top: 6%; }
+      100% { top: 90%; }
     }
 
     .sensor-ring {
@@ -557,14 +565,35 @@
       transition: all 0.3s;
     }
 
+    .sensor-ring-outer {
+      position: absolute;
+      inset: -15px;
+      border-radius: 38px;
+      border: 1.5px dotted rgba(56, 189, 248, 0.2);
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
     .scanner-pad.scanning ~ .sensor-ring {
-      border-color: rgba(14, 165, 233, 0.8);
-      animation: spinRing 6s linear infinite;
+      border-color: rgba(56, 189, 248, 0.95);
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.55);
+      animation: spinRing 5s linear infinite;
+    }
+
+    .scanner-pad.scanning ~ .sensor-ring-outer {
+      border-color: rgba(14, 165, 233, 0.75);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+      animation: spinRingReverse 8s linear infinite;
     }
 
     @keyframes spinRing {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spinRingReverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
     }
 
     .scanner-status-box {
@@ -576,23 +605,27 @@
       font-size: 12.5px;
       font-weight: 600;
       color: #334155;
-      min-height: 44px;
+      min-height: 46px;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      line-height: 1.4;
       transition: all 0.25s;
     }
 
     .scanner-status-box.scanning {
       background: #f0f9ff;
-      border-color: #bae6fd;
-      color: #0369a1;
+      border: 1.5px solid #38bdf8;
+      color: #0284c7;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
     }
 
     .scanner-status-box.success {
       background: #ecfdf5;
-      border-color: #a7f3d0;
+      border-color: #34d399;
       color: #047857;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
     }
 
     /* ==========================================
@@ -1105,6 +1138,12 @@
               </svg>
             </div>
             <div class="sensor-ring"></div>
+            <div class="sensor-ring-outer"></div>
+          </div>
+
+          <!-- 10-Second Glowing Live Timer Badge -->
+          <div id="fpTimerBadge" style="display:none; margin: 6px auto 10px; padding: 5px 16px; background: #e0f2fe; border: 1.5px solid #38bdf8; border-radius: 20px; font-size: 12px; font-weight: 800; color: #0284c7; width: fit-content; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);">
+            ⏳ SCANNING BIOMETRICS: <span id="fpTimerSeconds" style="font-family:'Space Mono', monospace; font-size:14px; color:#0284c7; font-weight:800;">10</span>s REMAINING
           </div>
 
           <!-- Live Scanner Status Box -->
@@ -1113,8 +1152,8 @@
           </div>
 
           <!-- Progress bar during scan -->
-          <div id="fpProgressBarContainer" style="width:100%; height:5px; background:#e2e8f0; border-radius:3px; margin-top:10px; overflow:hidden; display:none;">
-            <div id="fpProgressBarFill" style="height:100%; width:0%; background:#0ea5e9; transition:width 0.1s linear;"></div>
+          <div id="fpProgressBarContainer" style="width:100%; height:6px; background:#e2e8f0; border-radius:3px; margin-top:10px; overflow:hidden; display:none;">
+            <div id="fpProgressBarFill" style="height:100%; width:0%; background:linear-gradient(90deg, #0284c7, #38bdf8, #0ea5e9); box-shadow:0 0 10px rgba(14, 165, 233, 0.8); transition:width 0.1s linear;"></div>
           </div>
         </div>
 
@@ -1662,18 +1701,26 @@
       const barBox = document.getElementById('fpProgressBarContainer');
       const barFill = document.getElementById('fpProgressBarFill');
       const btn = document.getElementById('scanFingerBtn');
+      const timerBadge = document.getElementById('fpTimerBadge');
 
       if (pad) pad.className = 'scanner-pad';
       if (sBox) sBox.className = 'scanner-status-box';
       if (sText) sText.innerText = 'Touch sensor or click button to scan fingerprint (వేలిముద్ర వేయండి)';
       if (barBox) barBox.style.display = 'none';
+      if (timerBadge) {
+        timerBadge.style.display = 'none';
+        timerBadge.style.background = '#e0f2fe';
+        timerBadge.style.borderColor = '#38bdf8';
+        timerBadge.style.color = '#0284c7';
+        timerBadge.innerHTML = '⏳ SCANNING BIOMETRICS: <span id="fpTimerSeconds" style="font-family:\'Space Mono\', monospace; font-size:14px; color:#0284c7; font-weight:800;">10</span>s REMAINING';
+      }
       if (barFill) {
         barFill.style.width = '0%';
-        barFill.style.background = '#0ea5e9';
+        barFill.style.background = 'linear-gradient(90deg, #0284c7, #38bdf8, #0ea5e9)';
       }
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<span>👆 SCAN FINGERPRINT NOW</span> →';
+        btn.innerHTML = '<span>👆 SCAN FINGERPRINT NOW (10s SCAN)</span> →';
       }
     }
 
@@ -1687,31 +1734,43 @@
       const barBox = document.getElementById('fpProgressBarContainer');
       const barFill = document.getElementById('fpProgressBarFill');
       const btn = document.getElementById('scanFingerBtn');
+      const timerBadge = document.getElementById('fpTimerBadge');
 
       pad.className = 'scanner-pad scanning';
       sBox.className = 'scanner-status-box scanning';
       barBox.style.display = 'block';
+      if (timerBadge) timerBadge.style.display = 'block';
       btn.disabled = true;
-      btn.innerHTML = '<span>SCANNING FINGERPRINT...</span> ⏳';
 
-      let progress = 0;
-      const totalTimeMs = 3200;
+      let elapsedMs = 0;
+      const totalTimeMs = 10000; // 10 Full Seconds of attractive blue scanning
       const intervalMs = 100;
 
       const scanInterval = setInterval(() => {
-        progress += (intervalMs / totalTimeMs) * 100;
-        if (progress > 100) progress = 100;
+        elapsedMs += intervalMs;
+        const progress = Math.min(100, (elapsedMs / totalTimeMs) * 100);
         barFill.style.width = progress + '%';
 
-        if (progress < 30) {
-          sText.innerText = 'Capturing optical ridge patterns & friction contours...';
-        } else if (progress < 70) {
-          sText.innerText = 'Extracting minutiae coordinates & biometric hash token...';
-        } else if (progress < 95) {
-          sText.innerText = 'Validating against Aadhaar UIDAI Biometric Vault...';
+        const remainingSec = Math.max(1, Math.ceil((totalTimeMs - elapsedMs) / 1000));
+        const tSec = document.getElementById('fpTimerSeconds');
+        if (tSec) tSec.innerText = remainingSec;
+
+        btn.innerHTML = `<span>SCANNING BIOMETRICS (${remainingSec}s)...</span> ⏳`;
+
+        // Progressive 10-Second Biometric Verification Stages
+        if (elapsedMs < 2000) {
+          sText.innerText = `[Stage 1/5] Calibrating optical sensor & capturing epidermal ridges... (${remainingSec}s)`;
+        } else if (elapsedMs < 4000) {
+          sText.innerText = `[Stage 2/5] Extracting 128 biometric minutiae points & ridge flow... (${remainingSec}s)`;
+        } else if (elapsedMs < 6000) {
+          sText.innerText = `[Stage 3/5] Generating encrypted UIDAI 2048-bit Biometric Token... (${remainingSec}s)`;
+        } else if (elapsedMs < 8000) {
+          sText.innerText = `[Stage 4/5] Cross-matching with National Electoral Biometric Vault... (${remainingSec}s)`;
+        } else {
+          sText.innerText = `[Stage 5/5] Finalizing demographic liveness & biometric score... (${remainingSec}s)`;
         }
 
-        if (progress >= 100) {
+        if (elapsedMs >= totalTimeMs) {
           clearInterval(scanInterval);
           isFingerprintScanning = false;
           isFingerprintVerified = true;
@@ -1719,10 +1778,19 @@
           pad.className = 'scanner-pad success';
           sBox.className = 'scanner-status-box success';
           barFill.style.background = '#10b981';
-          sText.innerHTML = '✅ <strong>Biometric Match Confirmed!</strong> (UIDAI Match: 99.4%)';
+          barFill.style.boxShadow = '0 0 14px rgba(16, 185, 129, 0.9)';
+          sText.innerHTML = '✅ <strong>Biometric Match Confirmed!</strong> (UIDAI Match: 99.8%)';
+
+          if (timerBadge) {
+            timerBadge.style.background = '#ecfdf5';
+            timerBadge.style.borderColor = '#34d399';
+            timerBadge.style.color = '#047857';
+            timerBadge.innerHTML = '✓ BIOMETRIC MATCH CONFIRMED (10s VERIFICATION COMPLETE)';
+          }
+
           btn.innerHTML = '<span>✓ VERIFIED SUCCESSFULLY</span>';
 
-          // Proceed to constitutional 18+ eligibility evaluation
+          // Stay on success confirmation for a full 2 seconds so citizen can admire result
           setTimeout(() => {
             if (currentAge >= 18) {
               showScreen('screenEligible');
@@ -1732,7 +1800,7 @@
               document.getElementById('timeToWaitText').innerText = `~ ${remYears} Year(s) Remaining`;
               showScreen('screenNotEligible');
             }
-          }, 1100);
+          }, 2000);
         }
       }, intervalMs);
     }
