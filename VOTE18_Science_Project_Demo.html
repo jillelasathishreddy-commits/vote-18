@@ -453,6 +453,149 @@
     }
 
     /* ==========================================
+       BIOMETRIC FINGERPRINT SCANNER WIDGET
+       ========================================== */
+    .biometric-scanner-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 16px 14px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .scanner-pad-wrap {
+      position: relative;
+      display: inline-block;
+      margin: 14px auto 10px;
+    }
+
+    .scanner-pad {
+      position: relative;
+      width: 135px;
+      height: 160px;
+      background: #0f172a;
+      border-radius: 24px;
+      border: 3px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 10px 24px -5px rgba(15, 23, 42, 0.4), inset 0 0 25px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .scanner-pad:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 12px 28px -4px rgba(11, 99, 229, 0.35), inset 0 0 20px rgba(11, 99, 229, 0.2);
+    }
+
+    .scanner-pad.scanning {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 30px rgba(14, 165, 233, 0.6), inset 0 0 25px rgba(14, 165, 233, 0.3);
+      animation: padPulse 1.2s infinite alternate;
+    }
+
+    .scanner-pad.success {
+      border-color: #10b981;
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.7), inset 0 0 25px rgba(16, 185, 129, 0.3);
+    }
+
+    @keyframes padPulse {
+      0% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+      100% { box-shadow: 0 0 35px rgba(14, 165, 233, 0.85); }
+    }
+
+    .fingerprint-svg {
+      width: 86px;
+      height: 105px;
+      color: #64748b;
+      transition: all 0.3s ease;
+    }
+
+    .scanner-pad.scanning .fingerprint-svg {
+      color: #38bdf8;
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85));
+    }
+
+    .scanner-pad.success .fingerprint-svg {
+      color: #34d399;
+      filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.95));
+    }
+
+    .scanner-laser {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
+      box-shadow: 0 0 12px 3px #0ea5e9;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scanner-pad.scanning .scanner-laser {
+      opacity: 1;
+      animation: scanLaser 1.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes scanLaser {
+      0% { top: 8%; }
+      100% { top: 88%; }
+    }
+
+    .sensor-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 32px;
+      border: 2px dashed rgba(14, 165, 233, 0.3);
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .scanner-pad.scanning ~ .sensor-ring {
+      border-color: rgba(14, 165, 233, 0.8);
+      animation: spinRing 6s linear infinite;
+    }
+
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .scanner-status-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+
+    .scanner-status-box.scanning {
+      background: #f0f9ff;
+      border-color: #bae6fd;
+      color: #0369a1;
+    }
+
+    .scanner-status-box.success {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #047857;
+    }
+
+    /* ==========================================
        AUTHENTIC ELECTOR PHOTO IDENTITY CARD
        ========================================== */
     .elector-card {
@@ -888,14 +1031,14 @@
           </div>
 
           <button type="submit" class="btn-action">
-            <span>CHECK ELIGIBILITY</span> →
+            <span>PROCEED TO BIOMETRIC VERIFICATION</span> →
           </button>
         </form>
       </div>
     </div>
 
     <!-- ==============================================
-         STEP 7: 5 SECONDS PROCESSING (Age Calculation)
+         STEP 7: 5 SECONDS PROCESSING (Biometric Terminal)
          ============================================== -->
     <div id="screenProc3" class="step-screen">
       <div class="proc-widget">
@@ -906,7 +1049,78 @@
         <div class="proc-bar-bg">
           <div class="proc-bar-fill" id="p3Bar"></div>
         </div>
-        <p class="proc-message" id="p3Msg">Evaluating constitutional 18+ eligibility criteria...</p>
+        <p class="proc-message" id="p3Msg">Connecting to UIDAI Biometric Terminal & Gateway...</p>
+      </div>
+    </div>
+
+    <!-- ==============================================
+         STEP 7B: BIOMETRIC FINGERPRINT AUTHENTICATION
+         ============================================== -->
+    <div id="screenFingerprint" class="step-screen">
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <div class="icon-badge">👆</div>
+          <h2>Biometric Authentication</h2>
+          <p>Place your finger on the optical sensor for Aadhaar biometric verification</p>
+        </div>
+
+        <!-- Demographic Recap Strip -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px 14px; text-align:left; font-size:12px; margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="color:#64748b;">Aadhaar Suffix:</span>
+            <strong id="fpAadhaarVal" style="font-family:'Space Mono', monospace; color:#0f172a;">XXXX XXXX 1098</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px dashed #e2e8f0;">
+            <span style="color:#64748b;">Applicant Record:</span>
+            <strong id="fpCitizenName" style="color:#003366;">XXXXXX XXXXXX</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0;">
+            <span style="color:#64748b;">Calculated Age:</span>
+            <strong id="fpAgeVal" style="color:#059669;">21 Years</strong>
+          </div>
+        </div>
+
+        <!-- Biometric Scanner Pad -->
+        <div class="biometric-scanner-card">
+          <div style="font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.5px; text-transform:uppercase;">
+            UIDAI STQC Level-0 Optical Sensor
+          </div>
+
+          <div class="scanner-pad-wrap">
+            <div id="scannerPad" class="scanner-pad" onclick="startFingerprintScan()">
+              <div class="scanner-laser"></div>
+              <!-- Detailed Fingerprint SVG -->
+              <svg class="fingerprint-svg" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60 20 C40 20 25 35 25 55 C25 80 35 105 45 125" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 30 C45 30 35 42 35 58 C35 85 45 105 52 120" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 40 C50 40 45 48 45 60 C45 80 52 98 58 115" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 50 C55 50 52 54 52 62 C52 75 58 90 62 105" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 62 C60 68 62 76 65 85" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 20 C80 20 95 35 95 55 C95 80 85 105 75 125" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 30 C75 30 85 42 85 58 C85 85 75 105 68 120" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 40 C70 40 75 48 75 60 C75 80 68 98 62 115" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 50 C65 50 68 54 68 62 C68 75 62 90 58 105" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 10 C35 10 15 30 15 55 C15 90 28 118 38 135" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M60 10 C85 10 105 30 105 55 C105 90 92 118 82 135" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="sensor-ring"></div>
+          </div>
+
+          <!-- Live Scanner Status Box -->
+          <div id="scannerStatusBox" class="scanner-status-box">
+            <span id="scannerStatusText">Touch sensor or click button to scan fingerprint (వేలిముద్ర వేయండి)</span>
+          </div>
+
+          <!-- Progress bar during scan -->
+          <div id="fpProgressBarContainer" style="width:100%; height:5px; background:#e2e8f0; border-radius:3px; margin-top:10px; overflow:hidden; display:none;">
+            <div id="fpProgressBarFill" style="height:100%; width:0%; background:#0ea5e9; transition:width 0.1s linear;"></div>
+          </div>
+        </div>
+
+        <button type="button" id="scanFingerBtn" class="btn-action" style="margin-top:14px;" onclick="startFingerprintScan()">
+          <span>👆 SCAN FINGERPRINT NOW</span> →
+        </button>
       </div>
     </div>
 
@@ -1046,6 +1260,10 @@
               <span class="detail-label">Polling Station:</span>
               <span class="detail-value" style="font-size:10.5px;">Polling Station No. XXXXXX</span>
             </div>
+            <div class="detail-line">
+              <span class="detail-label">Biometric Status:</span>
+              <span class="detail-value" style="font-size:10.5px; color:#059669; font-weight:700;">✓ Verified (Fingerprint Match)</span>
+            </div>
           </div>
         </div>
 
@@ -1100,8 +1318,8 @@
     function showScreen(screenId) {
       const allScreens = [
         'screenLogin', 'screenWelcome', 'screenProc1', 'screenAadhaar',
-        'screenProc2', 'screenDob', 'screenProc3', 'screenNotEligible',
-        'screenEligible', 'screenProc4', 'screenCardResult'
+        'screenProc2', 'screenDob', 'screenProc3', 'screenFingerprint',
+        'screenNotEligible', 'screenEligible', 'screenProc4', 'screenCardResult'
       ];
       allScreens.forEach(id => {
         const el = document.getElementById(id);
@@ -1407,23 +1625,116 @@
       }
       currentAge = age;
 
+      // Populate Biometric recap strip
+      const nameElem = document.getElementById('fpCitizenName');
+      const aadhaarElem = document.getElementById('fpAadhaarVal');
+      const ageElem = document.getElementById('fpAgeVal');
+
+      if (nameElem) nameElem.innerText = currentUserName;
+      if (aadhaarElem) aadhaarElem.innerText = currentAadhaar ? 'XXXX XXXX ' + currentAadhaar.slice(-4) : 'XXXX XXXX 1098';
+      if (ageElem) ageElem.innerText = currentAge + ' Years';
+
       start5SecProcessing(
         'screenProc3',
         'p3Sec',
         'p3Bar',
         'p3Msg',
-        'Evaluating constitutional 18+ eligibility criteria...',
+        'Connecting to UIDAI Biometric Terminal & Initializing Sensor...',
         () => {
-          if (currentAge >= 18) {
-            showScreen('screenEligible');
-          } else {
-            document.getElementById('ineligibleAgeDisplay').innerText = `${currentAge} Years`;
-            const remYears = 18 - currentAge;
-            document.getElementById('timeToWaitText').innerText = `~ ${remYears} Year(s) Remaining`;
-            showScreen('screenNotEligible');
-          }
+          resetFingerprintScanner();
+          showScreen('screenFingerprint');
         }
       );
+    }
+
+    // ============================================
+    // STEP 7B: BIOMETRIC FINGERPRINT CONTROLLER
+    // ============================================
+    let isFingerprintScanning = false;
+    let isFingerprintVerified = false;
+
+    function resetFingerprintScanner() {
+      isFingerprintScanning = false;
+      isFingerprintVerified = false;
+      const pad = document.getElementById('scannerPad');
+      const sBox = document.getElementById('scannerStatusBox');
+      const sText = document.getElementById('scannerStatusText');
+      const barBox = document.getElementById('fpProgressBarContainer');
+      const barFill = document.getElementById('fpProgressBarFill');
+      const btn = document.getElementById('scanFingerBtn');
+
+      if (pad) pad.className = 'scanner-pad';
+      if (sBox) sBox.className = 'scanner-status-box';
+      if (sText) sText.innerText = 'Touch sensor or click button to scan fingerprint (వేలిముద్ర వేయండి)';
+      if (barBox) barBox.style.display = 'none';
+      if (barFill) {
+        barFill.style.width = '0%';
+        barFill.style.background = '#0ea5e9';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>👆 SCAN FINGERPRINT NOW</span> →';
+      }
+    }
+
+    function startFingerprintScan() {
+      if (isFingerprintScanning || isFingerprintVerified) return;
+      isFingerprintScanning = true;
+
+      const pad = document.getElementById('scannerPad');
+      const sBox = document.getElementById('scannerStatusBox');
+      const sText = document.getElementById('scannerStatusText');
+      const barBox = document.getElementById('fpProgressBarContainer');
+      const barFill = document.getElementById('fpProgressBarFill');
+      const btn = document.getElementById('scanFingerBtn');
+
+      pad.className = 'scanner-pad scanning';
+      sBox.className = 'scanner-status-box scanning';
+      barBox.style.display = 'block';
+      btn.disabled = true;
+      btn.innerHTML = '<span>SCANNING FINGERPRINT...</span> ⏳';
+
+      let progress = 0;
+      const totalTimeMs = 3200;
+      const intervalMs = 100;
+
+      const scanInterval = setInterval(() => {
+        progress += (intervalMs / totalTimeMs) * 100;
+        if (progress > 100) progress = 100;
+        barFill.style.width = progress + '%';
+
+        if (progress < 30) {
+          sText.innerText = 'Capturing optical ridge patterns & friction contours...';
+        } else if (progress < 70) {
+          sText.innerText = 'Extracting minutiae coordinates & biometric hash token...';
+        } else if (progress < 95) {
+          sText.innerText = 'Validating against Aadhaar UIDAI Biometric Vault...';
+        }
+
+        if (progress >= 100) {
+          clearInterval(scanInterval);
+          isFingerprintScanning = false;
+          isFingerprintVerified = true;
+
+          pad.className = 'scanner-pad success';
+          sBox.className = 'scanner-status-box success';
+          barFill.style.background = '#10b981';
+          sText.innerHTML = '✅ <strong>Biometric Match Confirmed!</strong> (UIDAI Match: 99.4%)';
+          btn.innerHTML = '<span>✓ VERIFIED SUCCESSFULLY</span>';
+
+          // Proceed to constitutional 18+ eligibility evaluation
+          setTimeout(() => {
+            if (currentAge >= 18) {
+              showScreen('screenEligible');
+            } else {
+              document.getElementById('ineligibleAgeDisplay').innerText = `${currentAge} Years`;
+              const remYears = 18 - currentAge;
+              document.getElementById('timeToWaitText').innerText = `~ ${remYears} Year(s) Remaining`;
+              showScreen('screenNotEligible');
+            }
+          }, 1100);
+        }
+      }, intervalMs);
     }
 
     // ============================================
@@ -1589,7 +1900,14 @@
       ctx.fillText("POLLING STATION:", x, 246);
       ctx.fillStyle = '#0f172a';
       ctx.font = 'bold 11px sans-serif';
-      ctx.fillText("Polling Station No. XXXXXX", x, 260);
+      ctx.fillText("Polling Station No. XXXXXX", x, 258);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'bold 8px sans-serif';
+      ctx.fillText("BIOMETRIC STATUS:", x, 272);
+      ctx.fillStyle = '#059669';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText("✓ VERIFIED (UIDAI FINGERPRINT MATCH)", x + 98, 272);
 
       // Photo
       const photoImg = document.getElementById('cardVoterPhoto');
@@ -1636,6 +1954,7 @@
 
     function restartApplicationFlow() {
       stopCameraStream();
+      resetFingerprintScanner();
       showScreen('screenWelcome');
     }
   </script>
